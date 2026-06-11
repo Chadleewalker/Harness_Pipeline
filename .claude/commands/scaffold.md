@@ -3,45 +3,51 @@ Create a new project from scratch. Claude picks the right language and tools bas
 ## Steps
 
 1. Ask: "What do you want to build? Describe it in plain terms — what should it do?"
-2. Based on the answer, decide the best language and framework. Tell the user your choice in one sentence (e.g., "I'll use Python for this since it's great for scripts and you won't need to install much").
+2. Based on the answer, pick the best template (see Choosing a Template below). Tell the user your choice in one sentence (e.g., "I'll start from the Python template since this is a small automation task").
 3. Ask: "What should the project be called, and where should I create it?" (suggest `C:\Code\ProjectName` as a default)
-4. Create the project folder and initialize it (git init, create package.json / requirements.txt / etc. as appropriate)
-5. Create a local `CLAUDE.md` in the new project that inherits from the master harness — include the project name and a one-line description
-6. Set up the basic file structure for that project type
-7. Set up the auto-format hook appropriate for the language (see Format Hooks below): create `.claude\hooks\format.ps1` and a `.claude\settings.json` that calls it
-8. Show the user a summary of what was created in plain language
+4. Copy the chosen template folder to the new project location.
+5. Fill in the placeholders in every copied file (see Filling Placeholders below).
+6. Initialize git (`git init`) and install dependencies (`pip install -r requirements.txt`, `npm install`, etc. — skip for the web-page template, which has none).
+7. Add anything specific the user described that the starter files don't already cover.
+8. Show the user a summary of what was created and how to run it, in plain language.
 
-## Local CLAUDE.md Template
-The new project's CLAUDE.md should start with:
-```
-# [Project Name]
+## Choosing a Template
+Templates live in `C:\Code\Harness\templates\`. Pick the closest match:
 
-[One-line description of what this project does]
+| If the user wants… | Use template |
+|---|---|
+| A script, automation, file/data task, or small command-line tool | `python-script` |
+| A plain website that just runs in the browser (no saving data, no logins) | `web-page` |
+| A website with a backend — saving data, logins, talking to other services, an API | `node-web-app` |
 
-This project was created with the Universal AI Harness.
-Master rules and skills: C:\Code\Harness\CLAUDE.md
+If nothing fits (e.g. a mobile app, a game engine project, something unusual), don't force a
+template — build the project from scratch instead, and still create a local `CLAUDE.md`, a
+`.claude\settings.json` + `.claude\hooks\format.ps1` format hook (see Format Hook Fallback), and
+a README.
 
-## Project-Specific Notes
-[Add anything specific to this project here]
-```
+## Filling Placeholders
+After copying a template, replace these markers in EVERY file (including `CLAUDE.md`,
+`README.md`, source files, and `package.json`):
 
-## Format Hooks
-Claude Code does NOT substitute a `${file}` placeholder in command hooks — it sends the
-edited file's path as JSON on standard input. So the hook must read that input and pull out
-the path itself. Set this up in two parts.
+- `{{PROJECT_NAME}}` → the project's name
+- `{{PROJECT_DESCRIPTION}}` → the one-line description from the user
 
-**Part A — create `.claude\hooks\format.ps1`** in the new project. This reads the hook
-payload from stdin, extracts the edited file, and formats it. Use the formatter line that
-matches the project's language:
+Don't leave any `{{...}}` markers behind.
 
+## Format Hook Fallback (only when building from scratch)
+The templates already include a working format hook. You only need this when no template fits.
+Claude Code does NOT substitute a `${file}` placeholder in command hooks — it sends the edited
+file's path as JSON on standard input, so the hook must read stdin and pull out the path itself.
+
+**Part A — `.claude\hooks\format.ps1`:**
 ```powershell
-# Reads the hook payload from stdin, extracts the edited file, formats it.
+# Reads the hook payload from stdin, extracts the edited file, and formats it.
 $payload = [Console]::In.ReadToEnd() | ConvertFrom-Json
 $file = $payload.tool_input.file_path
 if (-not $file) { exit 0 }
 
 # --- formatter line (pick ONE, based on language) ---
-# JavaScript / TypeScript:
+# JavaScript / TypeScript / web:
 npx prettier --write $file 2>$null
 # Python (use this line instead of the one above):
 # python -m ruff format $file 2>$null
@@ -49,10 +55,7 @@ npx prettier --write $file 2>$null
 exit 0
 ```
 
-**Part B — create `.claude\settings.json`** that calls the script above. This is the same
-for every language; `${CLAUDE_PROJECT_DIR}` IS substituted by Claude Code, so it's safe to
-use here:
-
+**Part B — `.claude\settings.json`** (`${CLAUDE_PROJECT_DIR}` IS substituted by Claude Code):
 ```json
 {
   "hooks": {
@@ -71,10 +74,10 @@ use here:
 }
 ```
 
-**Other / unknown:** Skip the format hook (don't create `format.ps1`) and note in the
-project CLAUDE.md that formatting is not yet configured.
+**Other / unknown language:** Skip the format hook and note in the project CLAUDE.md that
+formatting is not yet configured.
 
 ## Rules
 - Never ask the user to choose a language or framework — decide for them
-- Prefer the simplest stack that gets the job done
+- Prefer the simplest template that gets the job done
 - If the user's description is unclear, ask one clarifying question before proceeding
