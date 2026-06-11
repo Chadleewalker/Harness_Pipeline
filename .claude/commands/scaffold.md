@@ -23,7 +23,8 @@ Templates live in `C:\Code\Harness\templates\`. Pick the closest match:
 If nothing fits (e.g. a mobile app, a game engine project, something unusual), don't force a
 template — build the project from scratch instead, and still create a local `CLAUDE.md`, a
 `.claude\settings.json` + `.claude\hooks\format.ps1` format hook (see Format Hook Fallback), and
-a README.
+a README. The local `CLAUDE.md` must contain the line `@C:\Code\Harness\CLAUDE.md` on its own
+line — that's what loads the master rules automatically in the new project.
 
 ## Filling Placeholders
 After copying a template, replace these markers in EVERY file (including `CLAUDE.md`,
@@ -31,6 +32,10 @@ After copying a template, replace these markers in EVERY file (including `CLAUDE
 
 - `{{PROJECT_NAME}}` → the project's name
 - `{{PROJECT_DESCRIPTION}}` → the one-line description from the user
+
+**Exception for `package.json`:** npm requires the `"name"` field to be all lowercase with no
+spaces. There, replace `{{PROJECT_NAME}}` with a lowercase, hyphenated version instead
+(e.g. "My Recipe App" → `my-recipe-app`). Everywhere else, use the name as the user wrote it.
 
 Don't leave any `{{...}}` markers behind.
 
@@ -47,9 +52,9 @@ $file = $payload.tool_input.file_path
 if (-not $file) { exit 0 }
 
 # --- formatter line (pick ONE, based on language) ---
-# JavaScript / TypeScript / web:
-npx prettier --write $file 2>$null
-# Python (use this line instead of the one above):
+# JavaScript / TypeScript / web (--yes lets npx fetch prettier without stopping to ask):
+npx --yes prettier --write $file 2>$null
+# Python (use this line instead of the one above, and run `pip install ruff` during setup):
 # python -m ruff format $file 2>$null
 
 exit 0

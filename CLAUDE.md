@@ -51,8 +51,12 @@ C:\Code\Harness\
 │   ├── settings.json          ← Permissions and hooks
 │   └── commands\              ← Skill definitions (slash commands)
 ├── templates\                 ← Project templates used by /scaffold
+├── global-config\             ← Backup of C:\Users\chadl\.claude\ (settings, safety hook, global skills)
 └── known-issues.md            ← Running log of setup problems
 ```
+
+When editing anything in `C:\Users\chadl\.claude\` (settings, hooks, global skills), also
+update the matching backup copy in `global-config\` so the repository stays complete.
 
 ## When Creating a New Project with /scaffold
 - The new project gets its own `CLAUDE.md` that references this master

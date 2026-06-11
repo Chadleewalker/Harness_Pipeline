@@ -6,6 +6,7 @@ if (-not $file) { exit 0 }
 # Only format web files.
 if ($file -notmatch '\.(html|css|js|json|md)$') { exit 0 }
 
-npx prettier --write $file 2>$null
+# --yes lets npx download prettier without stopping to ask (this template has no package.json to install it from)
+npx --yes prettier --write $file 2>$null
 
 exit 0
