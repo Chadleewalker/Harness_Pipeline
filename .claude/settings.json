@@ -1,0 +1,11 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(New-Item*)",
+      "Bash(Copy-Item*)",
+      "Bash(Move-Item*)",
+      "Bash(Test-Path*)",
+      "Bash(Get-ChildItem*)"
+    ]
+  }
+}
