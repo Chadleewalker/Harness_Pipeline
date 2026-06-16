@@ -62,3 +62,6 @@ update the matching backup copy in `global-config\` so the repository stays comp
 - The new project gets its own `CLAUDE.md` that references this master
 - Claude picks the language and framework based on what the user wants to build
 - The project is self-contained — it can be opened independently and Claude will still know the rules
+- Memories about a new project go in THAT project's own memory folder, never in the Harness memory.
+  The Harness memory is only for how the harness itself behaves (user profile, harness plan,
+  feedback on how Claude should work). See the `/scaffold` skill's "Where Project Memories Go".

@@ -10,6 +10,24 @@ Create a new project from scratch. Claude picks the right language and tools bas
 6. Initialize git (`git init`) and install dependencies (`pip install -r requirements.txt`, `npm install`, etc. — skip for the web-page template, which has none).
 7. Add anything specific the user described that the starter files don't already cover.
 8. Show the user a summary of what was created and how to run it, in plain language.
+9. If you record any memories about the new project, write them in the NEW project's own memory
+   folder — NEVER in the Harness memory. See "Where Project Memories Go" below.
+
+## Where Project Memories Go
+The Harness memory (`C:\Users\chadl\.claude\projects\C--Code-Harness\memory\`) is ONLY for how the
+harness itself behaves — the user profile, the harness plan, and feedback on how Claude should work.
+Anything about a specific project you scaffold (its status, stack, gotchas, decisions) goes in that
+project's own memory folder, so the Harness memory stays clean.
+
+A project's memory folder lives at:
+`C:\Users\chadl\.claude\projects\<ENCODED_PATH>\memory\`
+where `<ENCODED_PATH>` is the project's full path with the drive colon dropped and every `\` (and
+`:`) turned into `-`. Examples:
+- `C:\Code\AudioViz`  →  `C--Code-AudioViz`
+- `C:\Code\BlenderPlayground`  →  `C--Code-BlenderPlayground`
+
+Create that folder if it doesn't exist, add a `MEMORY.md` index there, and put the project's
+memory files alongside it — exactly the structure the Harness memory uses.
 
 ## Choosing a Template
 Templates live in `C:\Code\Harness\templates\`. Pick the closest match:
@@ -86,3 +104,5 @@ formatting is not yet configured.
 - Never ask the user to choose a language or framework — decide for them
 - Prefer the simplest template that gets the job done
 - If the user's description is unclear, ask one clarifying question before proceeding
+- Never add project-specific memories to the Harness memory — they go in the new project's own
+  memory folder (see "Where Project Memories Go")
