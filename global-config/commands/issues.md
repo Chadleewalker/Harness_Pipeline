@@ -1,6 +1,6 @@
 Track recurring setup problems so Claude can avoid them in future sessions.
 
-Issues are stored in `C:\Code\Harness\known-issues.md`.
+Issues are stored in `C:\Code\New Project Start\Harness\known-issues.md`.
 
 ## Usage
 - `/issues` — Show all open issues

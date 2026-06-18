@@ -26,7 +26,7 @@ Use the project's actual full path (the location chosen in step 3). This file ap
 template and to projects built from scratch.
 
 ## Where Project Memories Go
-The Harness memory (`C:\Users\chadl\.claude\projects\C--Code-Harness\memory\`) is ONLY for how the
+The Harness memory (`C:\Users\chadl\.claude\projects\C--Code-New-Project-Start-Harness\memory\`) is ONLY for how the
 harness itself behaves — the user profile, the harness plan, and feedback on how Claude should work.
 Anything about a specific project you scaffold (its status, stack, gotchas, decisions) goes in that
 project's own memory folder, so the Harness memory stays clean.
@@ -42,7 +42,7 @@ Create that folder if it doesn't exist, add a `MEMORY.md` index there, and put t
 memory files alongside it — exactly the structure the Harness memory uses.
 
 ## Choosing a Template
-Templates live in `C:\Code\Harness\templates\`. Pick the closest match:
+Templates live in `C:\Code\New Project Start\Harness\templates\`. Pick the closest match:
 
 | If the user wants… | Use template |
 |---|---|
@@ -53,7 +53,7 @@ Templates live in `C:\Code\Harness\templates\`. Pick the closest match:
 If nothing fits (e.g. a mobile app, a game engine project, something unusual), don't force a
 template — build the project from scratch instead, and still create a local `CLAUDE.md`, a
 `.claude\settings.json` + `.claude\hooks\format.ps1` format hook (see Format Hook Fallback), and
-a README. The local `CLAUDE.md` must contain the line `@C:\Code\Harness\CLAUDE.md` on its own
+a README. The local `CLAUDE.md` must contain the line `@C:\Code\New Project Start\Harness\CLAUDE.md` on its own
 line — that's what loads the master rules automatically in the new project.
 
 ## Filling Placeholders

@@ -21,7 +21,7 @@ Template files contain these markers, which `/scaffold` replaces when stamping o
 
 ## What every template includes
 
-- A local `CLAUDE.md` that inherits from the master harness at `C:\Code\Harness\CLAUDE.md`
+- A local `CLAUDE.md` that inherits from the master harness at `C:\Code\New Project Start\Harness\CLAUDE.md`
 - A `README.md` with plain-English run instructions
 - A `.claude\` folder with the auto-format hook already wired up (`settings.json` + `hooks\format.ps1`)
 - Starter source files appropriate to the type

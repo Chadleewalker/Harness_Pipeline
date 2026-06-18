@@ -8,7 +8,7 @@ This repository is the master configuration for all projects. It defines how Cla
 - When you do make a technical choice, say what you picked and why in one sentence, then move on
 
 ## At the Start of Every Session
-1. Check `C:\Code\Harness\known-issues.md` for any open issues
+1. Check `C:\Code\New Project Start\Harness\known-issues.md` for any open issues
 2. If open issues exist, mention them briefly so the user knows what to watch for
 3. Check memory for current project status and resume where things left off
 
@@ -45,7 +45,7 @@ Global skills live in `C:\Users\chadl\.claude\commands\` and work in any project
 
 ## Project Structure
 ```
-C:\Code\Harness\
+C:\Code\New Project Start\Harness\
 ├── CLAUDE.md                  ← This file
 ├── .claude\
 │   ├── settings.json          ← Permissions and hooks

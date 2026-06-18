@@ -5,7 +5,7 @@
 This project was created with the Universal AI Harness. The line below automatically
 loads the master rules every session — don't remove it.
 
-@C:\Code\Harness\CLAUDE.md
+@C:\Code\New Project Start\Harness\CLAUDE.md
 
 ## Project-Specific Notes
 - Type: Static website (HTML, CSS, JavaScript) — runs in a browser, no server needed
