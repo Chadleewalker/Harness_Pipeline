@@ -7,11 +7,23 @@ Create a new project from scratch. Claude picks the right language and tools bas
 3. Ask: "What should the project be called, and where should I create it?" (suggest `C:\Code\ProjectName` as a default)
 4. Copy the chosen template folder to the new project location.
 5. Fill in the placeholders in every copied file (see Filling Placeholders below).
-6. Initialize git (`git init`) and install dependencies (`pip install -r requirements.txt`, `npm install`, etc. — skip for the web-page template, which has none).
-7. Add anything specific the user described that the starter files don't already cover.
-8. Show the user a summary of what was created and how to run it, in plain language.
-9. If you record any memories about the new project, write them in the NEW project's own memory
+6. Create a `.env.Project` file in the new project's root (see The .env.Project File below).
+7. Initialize git (`git init`) and install dependencies (`pip install -r requirements.txt`, `npm install`, etc. — skip for the web-page template, which has none).
+8. Add anything specific the user described that the starter files don't already cover.
+9. Show the user a summary of what was created and how to run it, in plain language.
+10. If you record any memories about the new project, write them in the NEW project's own memory
    folder — NEVER in the Harness memory. See "Where Project Memories Go" below.
+
+## The .env.Project File
+Every scaffolded project gets a `.env.Project` file in its root folder. It records the project's
+own full path so tools and scripts can find the project root without guessing. Write a single line:
+
+```
+PROJECT_PATH=C:\Code\ProjectName
+```
+
+Use the project's actual full path (the location chosen in step 3). This file applies to every
+template and to projects built from scratch.
 
 ## Where Project Memories Go
 The Harness memory (`C:\Users\chadl\.claude\projects\C--Code-Harness\memory\`) is ONLY for how the
