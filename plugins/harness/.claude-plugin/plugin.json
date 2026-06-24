@@ -1,0 +1,8 @@
+{
+  "name": "harness",
+  "description": "Universal AI Harness — plain-English skills for running, reviewing, deploying, committing, scaffolding, and health-checking projects.",
+  "version": "0.1.0",
+  "author": {
+    "name": "Chad Walker"
+  }
+}

@@ -1,0 +1,14 @@
+{
+  "name": "harness",
+  "owner": {
+    "name": "Chad Walker",
+    "email": "chadleewalker@gmail.com"
+  },
+  "plugins": [
+    {
+      "name": "harness",
+      "source": "./plugins/harness",
+      "description": "Universal AI Harness — plain-English skills for running, reviewing, deploying, committing, scaffolding, and health-checking projects."
+    }
+  ]
+}
