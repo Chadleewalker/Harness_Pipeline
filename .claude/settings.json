@@ -1,11 +1,18 @@
 {
   "permissions": {
     "allow": [
-      "Bash(New-Item*)",
-      "Bash(Copy-Item*)",
-      "Bash(Move-Item*)",
-      "Bash(Test-Path*)",
-      "Bash(Get-ChildItem*)"
+      "PowerShell(New-Item *)",
+      "PowerShell(Copy-Item *)",
+      "PowerShell(Move-Item *)",
+      "PowerShell(Test-Path *)",
+      "PowerShell(Get-ChildItem *)",
+      "PowerShell(Get-Content *)",
+      "Bash(mkdir *)",
+      "Bash(cp *)",
+      "Bash(mv *)",
+      "Bash(ls *)",
+      "Bash(test *)",
+      "Bash(cat *)"
     ]
   }
 }

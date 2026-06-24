@@ -11,7 +11,7 @@ new or reinstalled computer.
 |---|---|---|
 | `settings.json` | `C:\Users\chadw\.claude\settings.json` | Permissions, the safety hook, and the session-start known-issues check |
 | `hooks\safety-check.ps1` | `C:\Users\chadw\.claude\hooks\safety-check.ps1` | Blocks dangerous commands before they run |
-| `commands\*.md` | `C:\Users\chadw\.claude\commands\` | The global skills: /run, /review, /deploy, /issues, /commit |
+| `commands\*.md` | `C:\Users\chadw\.claude\commands\` | The global skills: /run, /review, /deploy, /issues, /commit, /harness-check |
 
 ## To restore on a new machine
 

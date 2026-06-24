@@ -40,6 +40,7 @@ This repository is the master configuration for all projects. It defines how Cla
 | `/deploy` | Everywhere | Deploys the current project |
 | `/issues` | Everywhere | Logs or shows recurring setup problems |
 | `/commit` | Everywhere | Commits all changes and pushes to GitHub |
+| `/harness-check` | Everywhere | Health-checks the harness wiring and reports problems in plain English |
 
 Global skills live in `C:\Users\chadw\.claude\commands\` and work in any project folder.
 
