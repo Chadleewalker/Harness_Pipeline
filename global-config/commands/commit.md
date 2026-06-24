@@ -26,7 +26,7 @@ fixed path.
 
 **Find the current project's memory folder.** Take the current working directory's full path,
 drop the drive colon, and turn every `\` (and `:`) into `-`. The memory folder is:
-`C:\Users\chadl\.claude\projects\<ENCODED_PATH>\memory\`
+`C:\Users\chadw\.claude\projects\<ENCODED_PATH>\memory\`
 Examples:
 - `C:\Code\AudioViz`  →  `C--Code-AudioViz`
 - `C:\Code\New Project Start\Harness`  →  `C--Code-New-Project-Start-Harness`

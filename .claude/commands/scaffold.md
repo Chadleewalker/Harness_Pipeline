@@ -26,13 +26,13 @@ Use the project's actual full path (the location chosen in step 3). This file ap
 template and to projects built from scratch.
 
 ## Where Project Memories Go
-The Harness memory (`C:\Users\chadl\.claude\projects\C--Code-New-Project-Start-Harness\memory\`) is ONLY for how the
+The Harness memory (`C:\Users\chadw\.claude\projects\C--Code-New-Project-Start-Harness\memory\`) is ONLY for how the
 harness itself behaves — the user profile, the harness plan, and feedback on how Claude should work.
 Anything about a specific project you scaffold (its status, stack, gotchas, decisions) goes in that
 project's own memory folder, so the Harness memory stays clean.
 
 A project's memory folder lives at:
-`C:\Users\chadl\.claude\projects\<ENCODED_PATH>\memory\`
+`C:\Users\chadw\.claude\projects\<ENCODED_PATH>\memory\`
 where `<ENCODED_PATH>` is the project's full path with the drive colon dropped and every `\` (and
 `:`) turned into `-`. Examples:
 - `C:\Code\AudioViz`  →  `C--Code-AudioViz`

@@ -41,7 +41,7 @@ This repository is the master configuration for all projects. It defines how Cla
 | `/issues` | Everywhere | Logs or shows recurring setup problems |
 | `/commit` | Everywhere | Commits all changes and pushes to GitHub |
 
-Global skills live in `C:\Users\chadl\.claude\commands\` and work in any project folder.
+Global skills live in `C:\Users\chadw\.claude\commands\` and work in any project folder.
 
 ## Project Structure
 ```
@@ -51,11 +51,11 @@ C:\Code\New Project Start\Harness\
 │   ├── settings.json          ← Permissions and hooks
 │   └── commands\              ← Skill definitions (slash commands)
 ├── templates\                 ← Project templates used by /scaffold
-├── global-config\             ← Backup of C:\Users\chadl\.claude\ (settings, safety hook, global skills)
+├── global-config\             ← Backup of C:\Users\chadw\.claude\ (settings, safety hook, global skills)
 └── known-issues.md            ← Running log of setup problems
 ```
 
-When editing anything in `C:\Users\chadl\.claude\` (settings, hooks, global skills), also
+When editing anything in `C:\Users\chadw\.claude\` (settings, hooks, global skills), also
 update the matching backup copy in `global-config\` so the repository stays complete.
 
 ## When Creating a New Project with /scaffold

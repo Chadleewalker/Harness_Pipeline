@@ -34,7 +34,7 @@
         "hooks": [
           {
             "type": "command",
-            "command": "powershell -NoProfile -File \"C:\\Users\\chadl\\.claude\\hooks\\safety-check.ps1\""
+            "command": "powershell -NoProfile -File \"C:\\Users\\chadw\\.claude\\hooks\\safety-check.ps1\""
           }
         ]
       }
