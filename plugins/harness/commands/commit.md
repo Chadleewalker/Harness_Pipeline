@@ -1,3 +1,6 @@
+---
+description: Update project state, stage all changes, commit with a generated message, and optionally push to GitHub.
+---
 Update project state, stage all changes, generate a commit message, and push to the remote repository.
 
 ## Steps

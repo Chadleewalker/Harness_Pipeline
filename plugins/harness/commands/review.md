@@ -1,3 +1,6 @@
+---
+description: Review the current code changes and explain findings in plain English.
+---
 Review the current code changes and explain findings in plain, everyday language.
 
 ## Steps

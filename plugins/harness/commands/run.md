@@ -1,3 +1,6 @@
+---
+description: Start the current project, whatever type it is.
+---
 Start the current project, regardless of what type it is.
 
 ## Steps

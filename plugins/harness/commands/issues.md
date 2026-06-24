@@ -1,3 +1,6 @@
+---
+description: Log or show recurring setup problems.
+---
 Track recurring setup problems so Claude can avoid them in future sessions.
 
 Issues are stored in `C:\Code\New Project Start\Harness\known-issues.md`.

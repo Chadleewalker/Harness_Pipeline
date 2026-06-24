@@ -1,3 +1,6 @@
+---
+description: Health-check the harness wiring and report any problems in plain English.
+---
 Check that the harness is wired up correctly and report any problems in plain English.
 
 This is a read-only health check. It changes nothing — it only looks and reports. Run it

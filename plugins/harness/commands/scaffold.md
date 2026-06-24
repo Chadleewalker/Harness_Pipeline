@@ -1,3 +1,6 @@
+---
+description: Create a new project from scratch; Claude picks the language and tools.
+---
 Create a new project from scratch. Claude picks the right language and tools based on what the user wants to build.
 
 ## Steps

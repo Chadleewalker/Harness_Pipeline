@@ -1,5 +1,6 @@
 {
   "name": "harness",
+  "description": "Chad's Universal AI Harness — plain-English skills for running, reviewing, deploying, committing, scaffolding, and health-checking projects.",
   "owner": {
     "name": "Chad Walker",
     "email": "chadleewalker@gmail.com"

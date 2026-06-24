@@ -1,3 +1,6 @@
+---
+description: Deploy the current project to its hosting environment.
+---
 Deploy the current project to its hosting environment.
 
 ## Steps
