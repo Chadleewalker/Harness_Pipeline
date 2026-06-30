@@ -52,7 +52,7 @@ Templates live in `C:\Code\New Project Start\Harness\templates\`. Pick the close
 
 If nothing fits (e.g. a mobile app, a game engine project, something unusual), don't force a
 template — build the project from scratch instead, and still create a local `CLAUDE.md`, a
-`.claude\settings.json` + `.claude\hooks\format.ps1` format hook (see Format Hook Fallback), and
+`.claude\settings.json` + `.claude\hooks\format.js` format hook (see Format Hook Fallback), and
 a README. The local `CLAUDE.md` must contain the line `@C:\Code\New Project Start\Harness\CLAUDE.md` on its own
 line — that's what loads the master rules automatically in the new project.
 
@@ -74,20 +74,31 @@ The templates already include a working format hook. You only need this when no 
 Claude Code does NOT substitute a `${file}` placeholder in command hooks — it sends the edited
 file's path as JSON on standard input, so the hook must read stdin and pull out the path itself.
 
-**Part A — `.claude\hooks\format.ps1`:**
-```powershell
-# Reads the hook payload from stdin, extracts the edited file, and formats it.
-$payload = [Console]::In.ReadToEnd() | ConvertFrom-Json
-$file = $payload.tool_input.file_path
-if (-not $file) { exit 0 }
+**Part A — `.claude\hooks\format.js`** (run with `node`, which works on both Windows and the Linux sandbox):
+```js
+// Reads the hook payload from stdin, extracts the edited file, and formats it.
+// Fail-safe: if the formatter isn't installed, it skips silently.
+const { spawnSync } = require("child_process");
+const fs = require("fs");
 
-# --- formatter line (pick ONE, based on language) ---
-# JavaScript / TypeScript / web (--yes lets npx fetch prettier without stopping to ask):
-npx --yes prettier --write $file 2>$null
-# Python (use this line instead of the one above, and run `pip install ruff` during setup):
-# python -m ruff format $file 2>$null
+let file;
+try {
+  file = JSON.parse(fs.readFileSync(0, "utf8")).tool_input.file_path;
+} catch {
+  process.exit(0);
+}
+if (!file) process.exit(0);
 
-exit 0
+// --- formatter (pick ONE, based on language) ---
+// JavaScript / TypeScript / web (`--yes` lets npx fetch prettier without stopping to ask):
+const npx = process.platform === "win32" ? "npx.cmd" : "npx";
+spawnSync(npx, ["--yes", "prettier", "--write", file], { stdio: "ignore" });
+// Python (use this instead, and run `pip install ruff` during setup):
+// for (const py of ["python3", "python"]) {
+//   if (!spawnSync(py, ["-m", "ruff", "format", file], { stdio: "ignore" }).error) break;
+// }
+
+process.exit(0);
 ```
 
 **Part B — `.claude\settings.json`** (`${CLAUDE_PROJECT_DIR}` IS substituted by Claude Code):
@@ -100,7 +111,7 @@ exit 0
         "hooks": [
           {
             "type": "command",
-            "command": "powershell -NoProfile -ExecutionPolicy Bypass -File \"${CLAUDE_PROJECT_DIR}\\.claude\\hooks\\format.ps1\""
+            "command": "node \"${CLAUDE_PROJECT_DIR}/.claude/hooks/format.js\""
           }
         ]
       }

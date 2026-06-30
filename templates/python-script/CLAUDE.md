@@ -11,4 +11,4 @@ loads the master rules every session — don't remove it.
 - Language: Python
 - Entry point: `main.py`
 - Dependencies are listed in `requirements.txt`
-- Formatting: handled automatically on save by `ruff` (see `.claude\hooks\format.ps1`)
+- Formatting: handled automatically on save by `ruff` (see `.claude\hooks\format.js`)

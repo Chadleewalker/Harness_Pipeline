@@ -11,4 +11,4 @@ loads the master rules every session — don't remove it.
 - Type: Static website (HTML, CSS, JavaScript) — runs in a browser, no server needed
 - Entry point: `index.html`
 - Styles: `style.css`  |  Behavior: `script.js`
-- Formatting: handled automatically on save by `prettier` (see `.claude\hooks\format.ps1`)
+- Formatting: handled automatically on save by `prettier` (see `.claude\hooks\format.js`)

@@ -4,5 +4,5 @@
 #
 # Then install them with:  pip install -r requirements.txt
 
-# ruff is the code formatter used by the auto-format hook (.claude\hooks\format.ps1)
+# ruff is the code formatter used by the auto-format hook (.claude\hooks\format.js)
 ruff

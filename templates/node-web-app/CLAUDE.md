@@ -13,4 +13,4 @@ loads the master rules every session — don't remove it.
 - Front-end files live in `public\`
 - Dependencies are listed in `package.json`
 - Start it with `npm start` (or ask Claude to `/run` it)
-- Formatting: handled automatically on save by `prettier` (see `.claude\hooks\format.ps1`)
+- Formatting: handled automatically on save by `prettier` (see `.claude\hooks\format.js`)

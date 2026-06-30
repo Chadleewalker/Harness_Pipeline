@@ -66,3 +66,14 @@ update the matching backup copy in `global-config\` so the repository stays comp
 - Memories about a new project go in THAT project's own memory folder, never in the Harness memory.
   The Harness memory is only for how the harness itself behaves (user profile, harness plan,
   feedback on how Claude should work). See the `/scaffold` skill's "Where Project Memories Go".
+
+## Cross-Platform Hooks (important)
+Projects run in two places: directly on Windows, and inside the Linux Docker sandbox that
+`launch-project.bat` starts. Any hook command in a `.claude\settings.json` must work in BOTH.
+- Run hooks with **`node`** — e.g. `node "${CLAUDE_PROJECT_DIR}/.claude/hooks/format.js"`. `node`
+  is the same command on Windows and in the sandbox, so there's no per-machine setup to remember.
+- Do **not** use `powershell` (it isn't installed in the Linux sandbox) or a bare `python3`
+  (it isn't on Windows — that name only hits the Microsoft Store stub).
+- Write hooks to **fail safe**: if a tool isn't installed, exit 0 quietly instead of erroring, so
+  a missing formatter never interrupts the session.
+- Use forward slashes in hook paths — they work on both systems.
