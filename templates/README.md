@@ -1,7 +1,7 @@
 # Project Templates
 
-These are starter skeletons used by the `/scaffold` skill. Each folder is a ready-to-copy
-project of a given type. When `/scaffold` runs, it copies the matching template into the new
+These are starter skeletons used by the `/harness:scaffold` skill. Each folder is a ready-to-copy
+project of a given type. When `/harness:scaffold` runs, it copies the matching template into the new
 project location and fills in the placeholders.
 
 ## Available templates
@@ -14,7 +14,7 @@ project location and fills in the placeholders.
 
 ## Placeholders
 
-Template files contain these markers, which `/scaffold` replaces when stamping out a project:
+Template files contain these markers, which `/harness:scaffold` replaces when stamping out a project:
 
 - `{{PROJECT_NAME}}` — the project's name
 - `{{PROJECT_DESCRIPTION}}` — a one-line description of what it does
@@ -26,5 +26,5 @@ Template files contain these markers, which `/scaffold` replaces when stamping o
 - A `.claude\` folder with the auto-format hook already wired up (`settings.json` + `hooks\format.js`)
 - Starter source files appropriate to the type
 
-`/scaffold` runs `git init` and installs dependencies after copying — those steps are not baked
+`/harness:scaffold` runs `git init` and installs dependencies after copying — those steps are not baked
 into the templates.

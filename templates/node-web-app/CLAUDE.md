@@ -25,5 +25,5 @@ duplicated here on purpose.
 - Server entry point: `server.js` (serves the site and handles requests)
 - Front-end files live in `public\`
 - Dependencies are listed in `package.json`
-- Start it with `npm start` (or ask Claude to `/run` it)
+- Start it with `npm start` (or ask Claude to `/harness:run` it)
 - Formatting: handled automatically on save by `prettier` (see `.claude\hooks\format.js`)

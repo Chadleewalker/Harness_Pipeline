@@ -34,7 +34,7 @@ Examples:
 - `C:\Code\AudioViz`  →  `C--Code-AudioViz`
 - `C:\Code\New Project Start\Harness`  →  `C--Code-New-Project-Start-Harness`
 
-The folder already exists (every project is built with `/scaffold`, which creates it). Write
+The folder already exists (every project is built with `/harness:scaffold`, which creates it). Write
 project facts there, never in another project's folder.
 
 **1. Memory** — record where things stand: what this session changed, the current status, and the

@@ -32,32 +32,44 @@ This repository is the master configuration for all projects. It defines how Cla
 - Any action that can't be easily undone
 
 ## Available Skills
-| Skill | Available | What it does |
-|---|---|---|
-| `/scaffold` | Harness only | Creates a new project from scratch |
-| `/run` | Everywhere | Starts the current project |
-| `/review` | Everywhere | Reviews code and explains findings in plain English |
-| `/deploy` | Everywhere | Deploys the current project |
-| `/issues` | Everywhere | Logs or shows recurring setup problems |
-| `/commit` | Everywhere | Commits all changes and pushes to GitHub |
-| `/harness-check` | Everywhere | Health-checks the harness wiring and reports problems in plain English |
+These ship inside the **harness plugin** and are typed with a `harness:` prefix (e.g. `/harness:run`).
+They work in any project on a machine where the plugin is installed and enabled.
 
-Global skills live in `C:\Users\chadw\.claude\commands\` and work in any project folder.
+| Skill | What it does |
+|---|---|
+| `/harness:scaffold` | Creates a new project from scratch |
+| `/harness:run` | Starts the current project |
+| `/harness:review` | Reviews code and explains findings in plain English |
+| `/harness:deploy` | Deploys the current project |
+| `/harness:issues` | Logs or shows recurring setup problems |
+| `/harness:commit` | Commits all changes and pushes to GitHub |
+| `/harness:harness-check` | Health-checks the harness wiring and reports problems in plain English |
+
+The skills live in `plugins\harness\commands\` in this repo — that's the single source of truth.
+Install or update the plugin on any machine with:
+- `/plugin marketplace add Chadleewalker/Harness`  (once per machine)
+- `/plugin install harness@harness`                (once per machine)
+- `/plugin update harness@harness`                 (to pull later changes)
 
 ## Project Structure
 ```
 C:\Code\New Project Start\Harness\
-├── CLAUDE.md                  ← This file
+├── CLAUDE.md                          ← This file (master rules)
 ├── .claude\
-│   ├── settings.json          ← Permissions and hooks
-│   └── commands\              ← Skill definitions (slash commands)
-├── templates\                 ← Project templates used by /scaffold
-├── global-config\             ← Backup of C:\Users\chadw\.claude\ (settings, safety hook, global skills)
-└── known-issues.md            ← Running log of setup problems
+│   └── settings.json                  ← Per-machine permission allow-list (plugins can't ship permissions)
+├── .claude-plugin\
+│   └── marketplace.json               ← Marketplace listing (this repo is its own "store")
+├── plugins\harness\
+│   ├── .claude-plugin\plugin.json     ← The plugin's ID card
+│   └── commands\                      ← The skills — single source of truth
+├── templates\                         ← Project templates used by /harness:scaffold
+└── known-issues.md                    ← Running log of setup problems
 ```
 
-When editing anything in `C:\Users\chadw\.claude\` (settings, hooks, global skills), also
-update the matching backup copy in `global-config\` so the repository stays complete.
+The skills travel inside the plugin, so there's no separate backup folder to keep in sync — pull
+changes on any machine with `/plugin update harness@harness`. The one thing a plugin **cannot**
+carry is the permission allow-list; that stays in `.claude\settings.json` here (and in a small
+per-machine `settings.json` on any other computer).
 
 ## When Creating a New Project with /scaffold
 - The new project gets its own `CLAUDE.md` that references this master

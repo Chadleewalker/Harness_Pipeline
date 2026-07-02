@@ -1,6 +1,10 @@
 # Plan: turn the harness into a Claude Code plugin
 
-> Status: **Phase 1 in progress** (additive scaffolding added; old setup still live and unchanged).
+> Status: **Phases 1–4 complete** (2026-07-02). Plugin is the single source of truth; the old
+> `~/.claude/commands` copies, the harness-local `.claude/commands/scaffold.md`, and the entire
+> `global-config/` backup folder have been deleted. Commands are now typed with the `harness:`
+> prefix. **Remaining:** Phase 3 still needs a real test *inside the Linux container*, and Phase 5
+> (scaffold-inheritance rethink) is deliberately held as a separate task.
 
 ## The end goal (what changes day-to-day)
 
@@ -60,14 +64,23 @@ The `global-config\` backup folder is retired at Phase 4 — the plugin replaces
 
 ## Phases (each safe and reversible)
 
-- **Phase 1 — build alongside the old setup (additive; nothing removed).** Add `marketplace.json`,
-  `plugin.json`, copy commands into `plugins/harness/commands/`.
-- **Phase 2 — test on Windows.** `/plugin marketplace add ./`, install, confirm `/harness:harness-check`
-  and the others run.
-- **Phase 3 — test in the Linux container.** Same commands; confirm the Bash side.
-- **Phase 4 — adopt.** Retire `~/.claude/commands\` copies and delete `global-config\`. Update
-  `CLAUDE.md` to describe the plugin.
-- **Phase 5 — `/scaffold` inheritance rethink** (point 3), on its own.
+- **Phase 1 — build alongside the old setup (additive; nothing removed).** ✅ Added `marketplace.json`,
+  `plugin.json`, copied commands into `plugins/harness/commands/`.
+- **Phase 2 — test on Windows.** ✅ Installed and enabled (`harness@harness`); commands run.
+- **Phase 3 — test in the Linux container.** ⬜ Still to do: install the plugin *inside* the
+  container and confirm the Bash side. Needs `launch-project.bat` → container → `/plugin` commands.
+- **Phase 4 — adopt.** ✅ Deleted the `~/.claude/commands\` copies, the harness-local
+  `.claude/commands/scaffold.md`, and `global-config\`. Updated `CLAUDE.md` and `harness-check` to
+  describe the plugin. (Safety hook was PowerShell-only + off; left in git history — see note below.)
+- **Phase 5 — `/scaffold` inheritance rethink** (point 3), on its own. ⬜ Not started.
+
+### Follow-up parked during Phase 4
+The old `global-config/hooks/safety-check.ps1` (blocks `git push --force`, `rm -rf /`, etc.) was
+PowerShell-only — it could never run in the Linux container — and was switched off. It was deleted
+with `global-config/` but remains in git history. To revive it properly: port it to a cross-platform
+`node` hook at `plugins/harness/hooks/safety-check.js`, wire it via `plugins/harness/hooks/hooks.json`
+(`PreToolUse`, referenced with `${CLAUDE_PLUGIN_ROOT}`), so it travels with the plugin and works in
+both environments.
 
 ## Safety / rollback
 

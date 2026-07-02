@@ -13,4 +13,4 @@
    python main.py
    ```
 
-Or just ask Claude to `/run` it.
+Or just ask Claude to `/harness:run` it.
