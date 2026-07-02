@@ -67,6 +67,38 @@ update the matching backup copy in `global-config\` so the repository stays comp
   The Harness memory is only for how the harness itself behaves (user profile, harness plan,
   feedback on how Claude should work). See the `/scaffold` skill's "Where Project Memories Go".
 
+## Where This Runs (Two Environments)
+Every project — this harness included — runs in one of two places. Something that works in one can
+quietly break in the other, so anything Claude builds must work in BOTH unless the user says otherwise.
+
+**1. Windows PC (local)**
+- Paths look like `C:\Code\...` — backslashes and a drive letter.
+- PowerShell is available.
+- Commands: `python`, `npx.cmd`, `node`.
+- The Harness folder (`C:\Code\New Project Start\Harness`) is present and reachable.
+
+**2. Docker sandbox** (the container `launch-project.bat` starts, opened as code-server in the browser)
+- Linux. The project is mounted at `/workspace` — and ONLY that one project folder. Nothing outside
+  it exists inside the container, including the Harness folder itself.
+- PowerShell is NOT installed.
+- Commands: `python3` (not `python`), `npx` (not `npx.cmd`), `node`.
+- Paths use forward slashes; there is no `C:\` drive.
+
+**Rules that keep things working in both**
+- Never assume a `C:\...` path exists inside the container. Anything that must run in the sandbox
+  uses relative paths or `/workspace`, never a hardcoded Windows path.
+- Never rely on PowerShell for something that must run in both — use `node` (present in both).
+- `python` on Windows vs `python3` in the sandbox: try both, don't hardcode one.
+- Keep each project self-contained. A project may be opened alone inside the container with no access
+  to the Harness, so it cannot count on the master rules loading there — see the note below.
+- For hook-specific guidance, see "Cross-Platform Hooks" just below.
+
+**Note on the master-rules import.** Every scaffolded `CLAUDE.md` has a line like
+`@C:\Code\New Project Start\Harness\CLAUDE.md`. That loads these master rules on Windows, but that
+path does not exist inside the container, so the import silently does nothing there. That's why the
+essential environment facts are ALSO embedded directly in each project's `CLAUDE.md` — so a project
+opened alone in the sandbox still understands where it runs.
+
 ## Cross-Platform Hooks (important)
 Projects run in two places: directly on Windows, and inside the Linux Docker sandbox that
 `launch-project.bat` starts. Any hook command in a `.claude\settings.json` must work in BOTH.

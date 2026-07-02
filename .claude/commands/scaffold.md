@@ -54,7 +54,10 @@ If nothing fits (e.g. a mobile app, a game engine project, something unusual), d
 template — build the project from scratch instead, and still create a local `CLAUDE.md`, a
 `.claude\settings.json` + `.claude\hooks\format.js` format hook (see Format Hook Fallback), and
 a README. The local `CLAUDE.md` must contain the line `@C:\Code\New Project Start\Harness\CLAUDE.md` on its own
-line — that's what loads the master rules automatically in the new project.
+line — that's what loads the master rules automatically in the new project. It must ALSO contain a
+self-contained "Where This Project Runs" section (copy it verbatim from any template's `CLAUDE.md`),
+because that import line does not resolve inside the Docker container, and the project still needs to
+understand its two environments when opened alone in the sandbox.
 
 ## Filling Placeholders
 After copying a template, replace these markers in EVERY file (including `CLAUDE.md`,
@@ -129,3 +132,6 @@ formatting is not yet configured.
 - If the user's description is unclear, ask one clarifying question before proceeding
 - Never add project-specific memories to the Harness memory — they go in the new project's own
   memory folder (see "Where Project Memories Go")
+- Every scaffolded `CLAUDE.md` must keep its self-contained "Where This Project Runs" section — the
+  templates already include it; don't strip it. It's what lets a project work in both Windows and the
+  Docker sandbox even when the master-rules import can't load (inside the container).
