@@ -1,6 +1,7 @@
 ---
 description: Create a new project from scratch; Claude picks the language and tools.
 ---
+
 Create a new project from scratch. Claude picks the right language and tools based on what the user wants to build.
 
 ## Steps
@@ -15,9 +16,10 @@ Create a new project from scratch. Claude picks the right language and tools bas
 8. Add anything specific the user described that the starter files don't already cover.
 9. Show the user a summary of what was created and how to run it, in plain language.
 10. If you record any memories about the new project, write them in the NEW project's own memory
-   folder — NEVER in the Harness memory. See "Where Project Memories Go" below.
+    folder — NEVER in the Harness memory. See "Where Project Memories Go" below.
 
 ## The .env.Project File
+
 Every scaffolded project gets a `.env.Project` file in its root folder. It records the project's
 own full path so tools and scripts can find the project root without guessing. Write a single line:
 
@@ -29,29 +31,32 @@ Use the project's actual full path (the location chosen in step 3). This file ap
 template and to projects built from scratch.
 
 ## Where Project Memories Go
-The Harness memory (`C:\Users\chadw\.claude\projects\C--Code-New-Project-Start-Harness\memory\`) is ONLY for how the
+
+The Harness memory (`<your-home>\.claude\projects\C--Code-New-Project-Start-Harness\memory\`, where `<your-home>` is the current user's home folder) is ONLY for how the
 harness itself behaves — the user profile, the harness plan, and feedback on how Claude should work.
 Anything about a specific project you scaffold (its status, stack, gotchas, decisions) goes in that
 project's own memory folder, so the Harness memory stays clean.
 
 A project's memory folder lives at:
-`C:\Users\chadw\.claude\projects\<ENCODED_PATH>\memory\`
+`<your-home>\.claude\projects\<ENCODED_PATH>\memory\` (where `<your-home>` is the current user's home folder)
 where `<ENCODED_PATH>` is the project's full path with the drive colon dropped and every `\` (and
 `:`) turned into `-`. Examples:
-- `C:\Code\AudioViz`  →  `C--Code-AudioViz`
-- `C:\Code\BlenderPlayground`  →  `C--Code-BlenderPlayground`
+
+- `C:\Code\AudioViz` → `C--Code-AudioViz`
+- `C:\Code\BlenderPlayground` → `C--Code-BlenderPlayground`
 
 Create that folder if it doesn't exist, add a `MEMORY.md` index there, and put the project's
 memory files alongside it — exactly the structure the Harness memory uses.
 
 ## Choosing a Template
+
 Templates live in `C:\Code\New Project Start\Harness\templates\`. Pick the closest match:
 
-| If the user wants… | Use template |
-|---|---|
-| A script, automation, file/data task, or small command-line tool | `python-script` |
-| A plain website that just runs in the browser (no saving data, no logins) | `web-page` |
-| A website with a backend — saving data, logins, talking to other services, an API | `node-web-app` |
+| If the user wants…                                                                | Use template    |
+| --------------------------------------------------------------------------------- | --------------- |
+| A script, automation, file/data task, or small command-line tool                  | `python-script` |
+| A plain website that just runs in the browser (no saving data, no logins)         | `web-page`      |
+| A website with a backend — saving data, logins, talking to other services, an API | `node-web-app`  |
 
 If nothing fits (e.g. a mobile app, a game engine project, something unusual), don't force a
 template — build the project from scratch instead, and still create a local `CLAUDE.md`, a
@@ -63,6 +68,7 @@ because that import line does not resolve inside the Docker container, and the p
 understand its two environments when opened alone in the sandbox.
 
 ## Filling Placeholders
+
 After copying a template, replace these markers in EVERY file (including `CLAUDE.md`,
 `README.md`, source files, and `package.json`):
 
@@ -76,11 +82,13 @@ spaces. There, replace `{{PROJECT_NAME}}` with a lowercase, hyphenated version i
 Don't leave any `{{...}}` markers behind.
 
 ## Format Hook Fallback (only when building from scratch)
+
 The templates already include a working format hook. You only need this when no template fits.
 Claude Code does NOT substitute a `${file}` placeholder in command hooks — it sends the edited
 file's path as JSON on standard input, so the hook must read stdin and pull out the path itself.
 
 **Part A — `.claude\hooks\format.js`** (run with `node`, which works on both Windows and the Linux sandbox):
+
 ```js
 // Reads the hook payload from stdin, extracts the edited file, and formats it.
 // Fail-safe: if the formatter isn't installed, it skips silently.
@@ -108,6 +116,7 @@ process.exit(0);
 ```
 
 **Part B — `.claude\settings.json`** (`${CLAUDE_PROJECT_DIR}` IS substituted by Claude Code):
+
 ```json
 {
   "hooks": {
@@ -130,6 +139,7 @@ process.exit(0);
 formatting is not yet configured.
 
 ## Rules
+
 - Never ask the user to choose a language or framework — decide for them
 - Prefer the simplest template that gets the job done
 - If the user's description is unclear, ask one clarifying question before proceeding

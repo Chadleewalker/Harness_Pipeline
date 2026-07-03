@@ -1,6 +1,7 @@
 ---
 description: Update project state, stage all changes, commit with a generated message, and optionally push to GitHub.
 ---
+
 Update project state, stage all changes, generate a commit message, and push to the remote repository.
 
 ## Steps
@@ -23,16 +24,18 @@ Update project state, stage all changes, generate a commit message, and push to 
 9. Report success or explain any errors in plain language
 
 ## Updating Project State
+
 This skill is meant to be run at the end of a work session, so every run is a real checkpoint
 worth recording. Do all of this for the project you're CURRENTLY working in — never assume a
 fixed path.
 
 **Find the current project's memory folder.** Take the current working directory's full path,
 drop the drive colon, and turn every `\` (and `:`) into `-`. The memory folder is:
-`C:\Users\chadw\.claude\projects\<ENCODED_PATH>\memory\`
+`<your-home>\.claude\projects\<ENCODED_PATH>\memory\` (where `<your-home>` is the current user's home folder, e.g. `C:\Users\<you>`)
 Examples:
-- `C:\Code\AudioViz`  →  `C--Code-AudioViz`
-- `C:\Code\New Project Start\Harness`  →  `C--Code-New-Project-Start-Harness`
+
+- `C:\Code\AudioViz` → `C--Code-AudioViz`
+- `C:\Code\New Project Start\Harness` → `C--Code-New-Project-Start-Harness`
 
 The folder already exists (every project is built with `/harness:scaffold`, which creates it). Write
 project facts there, never in another project's folder.
@@ -51,6 +54,7 @@ doc may be stale").
 that entry resolved.
 
 ## Rules
+
 - Never skip the confirmation step before pushing
 - Never use `--no-verify` or force flags
 - If there's nothing to commit, say so clearly
