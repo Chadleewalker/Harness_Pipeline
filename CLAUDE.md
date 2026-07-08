@@ -89,21 +89,23 @@ quietly break in the other, so anything Claude builds must work in BOTH unless t
 - Commands: `python`, `npx.cmd`, `node`.
 - The Harness folder (`C:\Code\New Project Start\Harness`) is present and reachable.
 
-**2. Docker sandbox** (the container `launch-project.bat` starts, opened as code-server in the browser)
-- Linux. The project is mounted at `/workspace` — and ONLY that one project folder. Nothing outside
-  it exists inside the container, including the Harness folder itself.
+**2. yolo_docker container** (a numbered Linux container with root access, opened as code-server
+in the browser — see "The yolo_docker Sandbox" below for the full picture)
+- Linux. The project is a git checkout at `~/workspace` (home is `/config`, so that's the same as
+  `/config/workspace`). Nothing from the Windows machine exists inside — no `C:\` drive, no
+  Harness folder.
 - PowerShell is NOT installed.
 - Commands: `python3` (not `python`), `npx` (not `npx.cmd`), `node`.
-- Paths use forward slashes; there is no `C:\` drive.
+- Paths use forward slashes.
 
 **Rules that keep things working in both**
 - Never assume a `C:\...` path exists inside the container. Anything that must run in the sandbox
-  uses relative paths or `/workspace`, never a hardcoded Windows path.
+  uses relative paths or `~/workspace`, never a hardcoded Windows path.
 - Never rely on PowerShell for something that must run in both — use `node` (present in both).
 - `python` on Windows vs `python3` in the sandbox: try both, don't hardcode one.
 - Keep each project self-contained. A project may be opened alone inside the container with no access
   to the Harness, so it cannot count on the master rules loading there — see the note below.
-- For hook-specific guidance, see "Cross-Platform Hooks" just below.
+- For hook-specific guidance, see "Cross-Platform Hooks" further below.
 
 **Note on the master-rules import.** Every scaffolded `CLAUDE.md` has a line like
 `@C:\Code\New Project Start\Harness\CLAUDE.md`. That loads these master rules on Windows, but that
@@ -111,9 +113,57 @@ path does not exist inside the container, so the import silently does nothing th
 essential environment facts are ALSO embedded directly in each project's `CLAUDE.md` — so a project
 opened alone in the sandbox still understands where it runs.
 
+## The yolo_docker Sandbox
+The Linux environment is provided by **yolo_docker** (https://github.com/JEdward7777/yolo_docker.git),
+created by Joshua. It replaces the old `launch-project.bat` bind-mount sandbox. The idea: a
+semi-ephemeral container where the coding agent has root — it can install whatever it wants, and the
+whole thing is easy to blow away and rebuild.
+
+**How it works**
+- One Docker volume is mounted and becomes an overlay over root; a chroot happens on login. So
+  everything written inside the container (via code-server) persists in that one volume.
+- Containers are numbered ("agents"). Agent N's code-server is at port `844N` (agent 4 → 8444).
+- The control script lives on the Windows host and is run **from WSL**:
+  `~/yolo_docker/agent.sh <command> [agent-number]`
+  Commands: `up N`, `down N` (stop, keep state), `destroy N` (delete state — full reset),
+  `copy SRC DST` (mirror SRC's volume onto DST, overwrites DST), `export N [FILE]` /
+  `import FILE N` (tar.gz snapshots), `logs N`, `info N`, `status`.
+- There is no official golden image; agent 3 ("The Deep End") is the current known-good source to
+  `copy` from.
+
+**How the project gets in and out (git only — no bind mount)**
+- The project's bare repo lives on the network share: `<git-share-drive>\<project_name>.git` on
+  Windows, which is `<git-share-unc>\<project_name>.git` from the
+  container's point of view.
+- Inside the container, `~/network_share/mount_remote_repo.sh` smbfs-mounts JUST that one bare repo
+  at `~/network_share/remote_repo.git` (the rest of the network drive stays invisible). This script
+  does NOT run automatically — run it once each time the container starts, before expecting the
+  remote to be reachable.
+- The repo is cloned from that mount point directly to `~/workspace` (the checkout's `.git` is at
+  `~/workspace/.git`). All work happens there.
+- Everyone pushes to `main`. Because several agents can work on the same project at once, always
+  `git fetch` and **rebase onto the remote before pushing** — plain git commands, no wrapper script.
+- Agents record what they have and haven't done in the project's harness files (`CLAUDE.md`,
+  memory notes), which travel in the repo — that's how agents coordinate.
+
+**Starting Claude Code inside the container**
+Always launch it with `/config/launch-claude-code.sh` — never by typing `claude` directly. The
+environment is headless (code-server is the interface), and that script sets the user's Claude Code
+keys. It needs no per-project edits; it just has to be used.
+
+**Setting up a NEW project in yolo_docker (checklist)**
+1. Create the project on the Windows PC and push it to a new bare repo at
+   `<git-share-drive>\<project_name>.git`.
+2. From WSL: `./agent.sh copy 3 N` to clone a working agent's volume onto agent N, then
+   `./agent.sh up N` and open code-server at port `844N`.
+3. Inside the container: edit `~/network_share/mount_remote_repo.sh` to point at the new project's
+   `.git` path, then run it.
+4. Clear out `~/workspace` and re-clone from `~/network_share/remote_repo.git`.
+5. Start Claude Code with `/config/launch-claude-code.sh`.
+
 ## Cross-Platform Hooks (important)
-Projects run in two places: directly on Windows, and inside the Linux Docker sandbox that
-`launch-project.bat` starts. Any hook command in a `.claude\settings.json` must work in BOTH.
+Projects run in two places: directly on Windows, and inside the Linux yolo_docker container.
+Any hook command in a `.claude\settings.json` must work in BOTH.
 - Run hooks with **`node`** — e.g. `node "${CLAUDE_PROJECT_DIR}/.claude/hooks/format.js"`. `node`
   is the same command on Windows and in the sandbox, so there's no per-machine setup to remember.
 - Do **not** use `powershell` (it isn't installed in the Linux sandbox) or a bare `python3`

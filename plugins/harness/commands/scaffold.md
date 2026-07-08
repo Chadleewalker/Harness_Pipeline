@@ -14,8 +14,10 @@ Create a new project from scratch. Claude picks the right language and tools bas
 6. Create a `.env.Project` file in the new project's root (see The .env.Project File below).
 7. Initialize git (`git init`) and install dependencies (`pip install -r requirements.txt`, `npm install`, etc. — skip for the web-page template, which has none).
 8. Add anything specific the user described that the starter files don't already cover.
-9. Show the user a summary of what was created and how to run it, in plain language.
-10. If you record any memories about the new project, write them in the NEW project's own memory
+9. Ask: "Will this project also run in a yolo_docker container?" If yes, do the yolo_docker
+   setup (see Setting Up for yolo_docker below).
+10. Show the user a summary of what was created and how to run it, in plain language.
+11. If you record any memories about the new project, write them in the NEW project's own memory
     folder — NEVER in the Harness memory. See "Where Project Memories Go" below.
 
 ## The .env.Project File
@@ -29,6 +31,29 @@ PROJECT_PATH=C:\Code\ProjectName
 
 Use the project's actual full path (the location chosen in step 3). This file applies to every
 template and to projects built from scratch.
+
+## Setting Up for yolo_docker
+yolo_docker (Joshua's project, https://github.com/JEdward7777/yolo_docker.git) is the numbered-container
+Linux sandbox described in the master `CLAUDE.md` ("The yolo_docker Sandbox"). Projects get into it
+through git only — a bare repo on the network share — never a bind mount. If the user says the new
+project will run there:
+
+1. Create a bare repo on the network share at `<git-share-drive>\<project_name>.git`
+   (`git init --bare`). Confirm with the user before writing to the git share.
+2. Add it as the project's remote and push (confirm before pushing, per the safety rules):
+   the same repo is reachable from inside a container at
+   `<git-share-unc>\<project_name>.git`.
+3. Then tell the user the container-side steps in plain language (these happen later, not now):
+   - From WSL on the Windows host: `~/yolo_docker/agent.sh copy 3 N` to clone a
+     known-good agent's volume onto agent N (agent 3, "The Deep End", is the current good source),
+     then `./agent.sh up N`. Code-server for agent N is at port `844N`.
+   - Inside the container: edit `~/network_share/mount_remote_repo.sh` to point at the new
+     project's `.git` path, run it (it must be run once each container start), clear out
+     `~/workspace`, and re-clone from `~/network_share/remote_repo.git`.
+   - Start Claude Code with `/config/launch-claude-code.sh` — never bare `claude`.
+
+The templates' `CLAUDE.md` already carries the in-container working rules ("Working inside
+yolo_docker") — don't strip that section.
 
 ## Where Project Memories Go
 
@@ -62,10 +87,11 @@ If nothing fits (e.g. a mobile app, a game engine project, something unusual), d
 template — build the project from scratch instead, and still create a local `CLAUDE.md`, a
 `.claude\settings.json` + `.claude\hooks\format.js` format hook (see Format Hook Fallback), and
 a README. The local `CLAUDE.md` must contain the line `@C:\Code\New Project Start\Harness\CLAUDE.md` on its own
-line — that's what loads the master rules automatically in the new project. It must ALSO contain a
-self-contained "Where This Project Runs" section (copy it verbatim from any template's `CLAUDE.md`),
-because that import line does not resolve inside the Docker container, and the project still needs to
-understand its two environments when opened alone in the sandbox.
+line — that's what loads the master rules automatically in the new project. It must ALSO contain the
+self-contained "Where This Project Runs" section AND its "Working inside yolo_docker" subsection
+(copy both verbatim from any template's `CLAUDE.md`), because that import line does not resolve
+inside the container, and the project still needs to understand its two environments when opened
+alone in the sandbox.
 
 ## Filling Placeholders
 
@@ -145,6 +171,7 @@ formatting is not yet configured.
 - If the user's description is unclear, ask one clarifying question before proceeding
 - Never add project-specific memories to the Harness memory — they go in the new project's own
   memory folder (see "Where Project Memories Go")
-- Every scaffolded `CLAUDE.md` must keep its self-contained "Where This Project Runs" section — the
-  templates already include it; don't strip it. It's what lets a project work in both Windows and the
-  Docker sandbox even when the master-rules import can't load (inside the container).
+- Every scaffolded `CLAUDE.md` must keep its self-contained "Where This Project Runs" section and
+  the "Working inside yolo_docker" subsection — the templates already include them; don't strip
+  them. They're what let a project work in both Windows and the yolo_docker container even when
+  the master-rules import can't load (inside the container).
