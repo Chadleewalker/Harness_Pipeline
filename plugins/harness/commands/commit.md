@@ -34,7 +34,7 @@ drop the drive colon, and turn every `\` (and `:`) into `-`. The memory folder i
 `<your-home>\.claude\projects\<ENCODED_PATH>\memory\` (where `<your-home>` is the current user's home folder, e.g. `C:\Users\<you>`)
 Examples:
 
-- `C:\Code\AudioViz` → `C--Code-AudioViz`
+- `C:\Code\Projects\AudioViz` → `C--Code-Projects-AudioViz`
 - `C:\Code\New Project Start\Harness` → `C--Code-New-Project-Start-Harness`
 
 The folder already exists (every project is built with `/harness:scaffold`, which creates it). Write

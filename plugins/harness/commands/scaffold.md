@@ -8,7 +8,7 @@ Create a new project from scratch. Claude picks the right language and tools bas
 
 1. Ask: "What do you want to build? Describe it in plain terms — what should it do?"
 2. Based on the answer, pick the best template (see Choosing a Template below). Tell the user your choice in one sentence (e.g., "I'll start from the Python template since this is a small automation task").
-3. Ask: "What should the project be called, and where should I create it?" (suggest `C:\Code\ProjectName` as a default)
+3. Ask: "What should the project be called, and where should I create it?" (suggest `C:\Code\Projects\ProjectName` as a default)
 4. Copy the chosen template folder to the new project location.
 5. Fill in the placeholders in every copied file (see Filling Placeholders below).
 6. Create a `.env.Project` file in the new project's root (see The .env.Project File below).
@@ -26,7 +26,7 @@ Every scaffolded project gets a `.env.Project` file in its root folder. It recor
 own full path so tools and scripts can find the project root without guessing. Write a single line:
 
 ```
-PROJECT_PATH=C:\Code\ProjectName
+PROJECT_PATH=C:\Code\Projects\ProjectName
 ```
 
 Use the project's actual full path (the location chosen in step 3). This file applies to every
@@ -67,8 +67,8 @@ A project's memory folder lives at:
 where `<ENCODED_PATH>` is the project's full path with the drive colon dropped and every `\` (and
 `:`) turned into `-`. Examples:
 
-- `C:\Code\AudioViz` → `C--Code-AudioViz`
-- `C:\Code\BlenderPlayground` → `C--Code-BlenderPlayground`
+- `C:\Code\Projects\AudioViz` → `C--Code-Projects-AudioViz`
+- `C:\Code\Projects\BlenderPlayground` → `C--Code-Projects-BlenderPlayground`
 
 Create that folder if it doesn't exist, add a `MEMORY.md` index there, and put the project's
 memory files alongside it — exactly the structure the Harness memory uses.
