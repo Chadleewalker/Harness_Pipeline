@@ -8,7 +8,9 @@ Create a new project from scratch. Claude picks the right language and tools bas
 
 1. Ask: "What do you want to build? Describe it in plain terms — what should it do?"
 2. Based on the answer, pick the best template (see Choosing a Template below). Tell the user your choice in one sentence (e.g., "I'll start from the Python template since this is a small automation task").
-3. Ask: "What should the project be called, and where should I create it?" (suggest `C:\Code\Projects\ProjectName` as a default)
+3. Ask: "What should the project be called, and where should I create it?" Default the location to
+   this machine's **project base folder** from `machine.local.md` (e.g. `C:\Code\Projects\ProjectName`
+   on the personal PC, `C:\Code\ProjectName` on the work PC) — read that file rather than assuming.
 4. Copy the chosen template folder to the new project location.
 5. Fill in the placeholders in every copied file (see Filling Placeholders below).
 6. Create a `.env.Project` file in the new project's root (see The .env.Project File below).
@@ -26,13 +28,18 @@ Every scaffolded project gets a `.env.Project` file in its root folder. It recor
 own full path so tools and scripts can find the project root without guessing. Write a single line:
 
 ```
-PROJECT_PATH=C:\Code\Projects\ProjectName
+PROJECT_PATH=<the project's actual full path from step 3, e.g. C:\Code\Projects\ProjectName>
 ```
 
 Use the project's actual full path (the location chosen in step 3). This file applies to every
 template and to projects built from scratch.
 
 ## Setting Up for yolo_docker
+> **This whole section applies only to machines whose `machine.local.md` uses yolo_docker.** The
+> `J:` network-share path and the `chadw` username below are the **work PC's** values — read this
+> machine's `machine.local.md` for the real ones, and skip this section entirely on a machine that
+> uses the `launch-project.bat` bind-mount launcher instead (e.g. the personal PC).
+
 yolo_docker (Joshua's project, https://github.com/JEdward7777/yolo_docker.git) is the numbered-container
 Linux sandbox described in the master `CLAUDE.md` ("The yolo_docker Sandbox"). Projects get into it
 through git only — a bare repo on the network share — never a bind mount. If the user says the new

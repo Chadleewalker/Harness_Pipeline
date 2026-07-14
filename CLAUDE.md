@@ -8,9 +8,28 @@ This repository is the master configuration for all projects. It defines how Cla
 - When you do make a technical choice, say what you picked and why in one sentence, then move on
 
 ## At the Start of Every Session
-1. Check `C:\Code\New Project Start\Harness\known-issues.md` for any open issues
-2. If open issues exist, mention them briefly so the user knows what to watch for
-3. Check memory for current project status and resume where things left off
+1. Read `machine.local.md` (in this Harness folder) for THIS computer's specifics — see
+   "Per-Machine Local Config" below. Its values win over any machine-specific example in these docs.
+2. Check `C:\Code\New Project Start\Harness\known-issues.md` for any open issues
+3. If open issues exist, mention them briefly so the user knows what to watch for
+4. Check memory for current project status and resume where things left off
+
+## Per-Machine Local Config (`machine.local.md`)
+The user runs this harness on more than one computer (e.g. a personal PC and a work PC), and those
+machines differ — different project folders, sandbox launchers, network drives, and usernames. To
+stop them overwriting each other through git, all machine-specific facts live in a file called
+`machine.local.md` in this Harness folder that is **git-ignored** — each machine keeps its own copy
+and it never syncs.
+
+- **Read it at session start.** It is the source of truth for: the project base folder, how this
+  machine launches its Docker sandbox, any network-share paths, and the local username.
+- **Its values win.** Anywhere else in these docs names a concrete username, drive path, or project
+  folder, treat that as an example — defer to `machine.local.md` for the machine you're actually on.
+- **Never put machine-specific values into the shared (git-tracked) files.** If something is true
+  for only one computer, it belongs in that computer's `machine.local.md`, not in `CLAUDE.md`, the
+  templates, or the skills.
+- **A new computer needs its own copy.** If `machine.local.md` is missing, ask the user the few
+  facts above and write one (copy the structure from another machine's file).
 
 ## How Claude Should Behave
 
@@ -114,10 +133,16 @@ essential environment facts are ALSO embedded directly in each project's `CLAUDE
 opened alone in the sandbox still understands where it runs.
 
 ## The yolo_docker Sandbox
+> **Machine-specific values below live in `machine.local.md`.** The concrete username (`chadw`),
+> `J:` network-share path, and project base folder in this section describe the **work PC**. On any
+> given computer, defer to that machine's `machine.local.md` for the real values — and note some
+> machines don't use yolo_docker at all (the personal PC uses the `launch-project.bat` bind-mount
+> launcher instead). Read this section for the general how-it-works, not as literal paths for every machine.
+
 The Linux environment is provided by **yolo_docker** (https://github.com/JEdward7777/yolo_docker.git),
-created by Joshua. It replaces the old `launch-project.bat` bind-mount sandbox. The idea: a
-semi-ephemeral container where the coding agent has root — it can install whatever it wants, and the
-whole thing is easy to blow away and rebuild.
+created by Joshua. On machines that use it, it replaces the old `launch-project.bat` bind-mount
+sandbox. The idea: a semi-ephemeral container where the coding agent has root — it can install
+whatever it wants, and the whole thing is easy to blow away and rebuild.
 
 **How it works**
 - One Docker volume is mounted and becomes an overlay over root; a chroot happens on login. So
