@@ -36,6 +36,9 @@ duplicated here on purpose.
   WSL on the Windows host — see the harness master rules.
 
 ## Project-Specific Notes
+- **The spec lives in `SPEC.md`** — what this project should do and what "done" means. Read it
+  before making changes; check items off only when verified working; update it (with the
+  user's OK) whenever the plan changes.
 - Type: Static website (HTML, CSS, JavaScript) — runs in a browser, no server needed
 - Entry point: `index.html`
 - Styles: `style.css`  |  Behavior: `script.js`

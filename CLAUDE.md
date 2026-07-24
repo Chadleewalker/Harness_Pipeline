@@ -92,6 +92,9 @@ per-machine `settings.json` on any other computer).
 
 ## When Creating a New Project with /scaffold
 - The new project gets its own `CLAUDE.md` that references this master
+- The new project gets a `SPEC.md` — the agreed, written description of what's being built and
+  a "Done means…" checklist, approved by the user BEFORE building starts. `/harness:review`
+  checks the code against it, and it must be kept up to date when the plan changes.
 - Claude picks the language and framework based on what the user wants to build
 - The project is self-contained — it can be opened independently and Claude will still know the rules
 - Memories about a new project go in THAT project's own memory folder, never in the Harness memory.

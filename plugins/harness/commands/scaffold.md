@@ -7,20 +7,46 @@ Create a new project from scratch. Claude picks the right language and tools bas
 ## Steps
 
 1. Ask: "What do you want to build? Describe it in plain terms — what should it do?"
-2. Based on the answer, pick the best template (see Choosing a Template below). Tell the user your choice in one sentence (e.g., "I'll start from the Python template since this is a small automation task").
-3. Ask: "What should the project be called, and where should I create it?" Default the location to
+2. **Draft the spec and get it approved** (see The SPEC.md File below). From the answer, write:
+   - a short "What it should do" list, and
+   - a plain-English "Done means…" checklist — the concrete things that must work for the
+     project to count as finished.
+   Show both to the user and ask: "Does this match what you want?" Adjust until they say yes.
+   This is the user's check on WHAT gets built — don't skip it, and don't start building
+   before it's approved.
+3. Based on the answer, pick the best template (see Choosing a Template below). Tell the user your choice in one sentence (e.g., "I'll start from the Python template since this is a small automation task").
+4. Ask: "What should the project be called, and where should I create it?" Default the location to
    this machine's **project base folder** from `machine.local.md` (e.g. `C:\Code\Projects\ProjectName`
    on the personal PC, `C:\Code\ProjectName` on the work PC) — read that file rather than assuming.
-4. Copy the chosen template folder to the new project location.
-5. Fill in the placeholders in every copied file (see Filling Placeholders below).
-6. Create a `.env.Project` file in the new project's root (see The .env.Project File below).
-7. Initialize git (`git init`) and install dependencies (`pip install -r requirements.txt`, `npm install`, etc. — skip for the web-page template, which has none).
-8. Add anything specific the user described that the starter files don't already cover.
-9. Ask: "Will this project also run in a yolo_docker container?" If yes, do the yolo_docker
-   setup (see Setting Up for yolo_docker below).
-10. Show the user a summary of what was created and how to run it, in plain language.
-11. If you record any memories about the new project, write them in the NEW project's own memory
+5. Copy the chosen template folder to the new project location.
+6. Fill in the placeholders in every copied file (see Filling Placeholders below). This includes
+   writing the approved spec into `SPEC.md`.
+7. Create a `.env.Project` file in the new project's root (see The .env.Project File below).
+8. Initialize git (`git init`) and install dependencies (`pip install -r requirements.txt`, `npm install`, etc. — skip for the web-page template, which has none).
+9. Build what `SPEC.md` says, beyond what the starter files already cover.
+10. Ask: "Will this project also run in a yolo_docker container?" If yes, do the yolo_docker
+    setup (see Setting Up for yolo_docker below).
+11. Show the user a summary of what was created and how to run it, in plain language.
+12. If you record any memories about the new project, write them in the NEW project's own memory
     folder — NEVER in the Harness memory. See "Where Project Memories Go" below.
+
+## The SPEC.md File
+
+Every project gets a `SPEC.md` in its root — the agreed, written description of what's being
+built and what "done" means. It is the file `/harness:review` checks the code against, and the
+file a future session (or another agent in the sandbox) reads to know the goal. The templates
+include a `SPEC.md` with placeholders; fill them from the spec the user approved in step 2:
+
+- `{{SPEC_DETAILS}}` → the "What it should do" list (short bullet points, plain English)
+- `{{DONE_CHECKLIST}}` → the "Done means…" items as an unchecked markdown checklist
+  (`- [ ] ...`), each one a concrete, checkable outcome ("saving a recipe and reloading the
+  page keeps it"), not a vague goal ("works well")
+- `{{OUT_OF_SCOPE}}` → anything the user said they DON'T want, or `- Nothing noted yet.`
+
+Spec rules that apply for the whole life of the project:
+- Only check off a "Done means…" item after actually trying it and seeing it work.
+- If the user changes what they want, update `SPEC.md` (and add a row to its "Spec changes"
+  table) as part of making the change — the spec must never drift from reality.
 
 ## The .env.Project File
 
@@ -92,8 +118,9 @@ Templates live in `C:\Code\New Project Start\Harness\templates\`. Pick the close
 
 If nothing fits (e.g. a mobile app, a game engine project, something unusual), don't force a
 template — build the project from scratch instead, and still create a local `CLAUDE.md`, a
-`.claude\settings.json` + `.claude\hooks\format.js` format hook (see Format Hook Fallback), and
-a README. The local `CLAUDE.md` must contain the line `@C:\Code\New Project Start\Harness\CLAUDE.md` on its own
+`SPEC.md` (copy the structure from any template's `SPEC.md` and fill it from the approved
+spec), a `.claude\settings.json` + `.claude\hooks\format.js` format hook (see Format Hook
+Fallback), and a README. The local `CLAUDE.md` must contain the line `@C:\Code\New Project Start\Harness\CLAUDE.md` on its own
 line — that's what loads the master rules automatically in the new project. It must ALSO contain the
 self-contained "Where This Project Runs" section AND its "Working inside yolo_docker" subsection
 (copy both verbatim from any template's `CLAUDE.md`), because that import line does not resolve
@@ -107,6 +134,8 @@ After copying a template, replace these markers in EVERY file (including `CLAUDE
 
 - `{{PROJECT_NAME}}` → the project's name
 - `{{PROJECT_DESCRIPTION}}` → the one-line description from the user
+- `{{SPEC_DETAILS}}`, `{{DONE_CHECKLIST}}`, `{{OUT_OF_SCOPE}}` → only appear in `SPEC.md`;
+  fill them from the approved spec (see The SPEC.md File above)
 
 **Exception for `package.json`:** npm requires the `"name"` field to be all lowercase with no
 spaces. There, replace `{{PROJECT_NAME}}` with a lowercase, hyphenated version instead
@@ -176,6 +205,10 @@ formatting is not yet configured.
 - Never ask the user to choose a language or framework — decide for them
 - Prefer the simplest template that gets the job done
 - If the user's description is unclear, ask one clarifying question before proceeding
+- Never start building before the user has approved the "Done means…" checklist (step 2) —
+  the spec is approved first, then built
+- Every scaffolded project must end up with a filled-in `SPEC.md` — no `{{...}}` markers left,
+  whether from a template or built from scratch
 - Never add project-specific memories to the Harness memory — they go in the new project's own
   memory folder (see "Where Project Memories Go")
 - Every scaffolded `CLAUDE.md` must keep its self-contained "Where This Project Runs" section and
