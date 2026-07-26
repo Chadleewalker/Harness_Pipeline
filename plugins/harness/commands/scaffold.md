@@ -26,8 +26,12 @@ Create a new project from scratch. Claude picks the right language and tools bas
 9. Build what `SPEC.md` says, beyond what the starter files already cover.
 10. Ask: "Will this project also run in a yolo_docker container?" If yes, do the yolo_docker
     setup (see Setting Up for yolo_docker below).
-11. Show the user a summary of what was created and how to run it, in plain language.
-12. If you record any memories about the new project, write them in the NEW project's own memory
+11. Ask: "Will the overnight pipeline work on this project?" If yes, run
+    `/harness:pipeline-onboard` — it follows the checklist in the pipeline repo's
+    `ONBOARDING.md` (config file, frozen-test folder, Docker image, `CLAUDE.md` changes).
+    A project can be onboarded later instead; the question is just cheapest to answer now.
+12. Show the user a summary of what was created and how to run it, in plain language.
+13. If you record any memories about the new project, write them in the NEW project's own memory
     folder — NEVER in the Harness memory. See "Where Project Memories Go" below.
 
 ## The SPEC.md File

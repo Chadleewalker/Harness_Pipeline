@@ -63,6 +63,7 @@ They work in any project on a machine where the plugin is installed and enabled.
 | `/harness:issues` | Logs or shows recurring setup problems |
 | `/harness:commit` | Commits all changes and pushes to GitHub |
 | `/harness:harness-check` | Health-checks the harness wiring and reports problems in plain English |
+| `/harness:pipeline-onboard` | Makes the current project a valid target for the overnight pipeline (follows `ONBOARDING.md` in the pipeline repo) |
 
 The skills live in `plugins\harness\commands\` in this repo — that's the single source of truth.
 Install or update the plugin on any machine with:
