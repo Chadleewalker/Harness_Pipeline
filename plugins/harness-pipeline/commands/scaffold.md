@@ -1,8 +1,10 @@
 ---
-description: Create a new project from scratch; Claude picks the language and tools.
+description: Create a new project from scratch; the language is chosen together in a short discussion.
 ---
 
-Create a new project from scratch. Claude picks the right language and tools based on what the user wants to build.
+Create a new project from scratch. The language is chosen together — Claude lays out the
+sensible options in plain English and the user makes the call. The smaller tooling
+decisions stay Claude's.
 
 ## Steps
 
@@ -14,7 +16,12 @@ Create a new project from scratch. Claude picks the right language and tools bas
    Show both to the user and ask: "Does this match what you want?" Adjust until they say yes.
    This is the user's check on WHAT gets built — don't skip it, and don't start building
    before it's approved.
-3. Based on the answer, pick the best template (see Choosing a Template below). Tell the user your choice in one sentence (e.g., "I'll start from the Python template since this is a small automation task").
+3. **Discuss the language.** From what the user wants to build, lay out the sensible
+   options — usually two or three — in plain English: one line each on what it's good at
+   and its tradeoff, plus which one you'd recommend and why. The user makes the call; if
+   they say "you pick" or have no preference, go with your recommendation. Then pick the
+   template that matches the agreed language (see Choosing a Template below) and say so
+   in one sentence.
 4. Ask: "What should the project be called, and where should I create it?" Default the location to
    this machine's **project base folder** from `machine.local.md` (e.g. `C:\Code\Projects\ProjectName`
    on the personal PC, `C:\Code\ProjectName` on the work PC) — read that file rather than assuming.
@@ -206,7 +213,10 @@ formatting is not yet configured.
 
 ## Rules
 
-- Never ask the user to choose a language or framework — decide for them
+- The language is a conversation, not a unilateral pick: offer options with a
+  recommendation, in plain English, and let the user decide (no preference = your
+  recommendation). Everything smaller — libraries, file layout, tooling — you still
+  decide yourself; don't burden the user with those choices
 - Prefer the simplest template that gets the job done
 - If the user's description is unclear, ask one clarifying question before proceeding
 - Never start building before the user has approved the "Done means…" checklist (step 2) —
