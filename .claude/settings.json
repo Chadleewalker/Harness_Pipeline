@@ -12,7 +12,16 @@
       "Bash(mv *)",
       "Bash(ls *)",
       "Bash(test *)",
-      "Bash(cat *)"
+      "Bash(cat *)",
+      "Bash(head *)",
+      "Bash(tail *)",
+      "Bash(grep *)",
+      "Bash(pwd)",
+      "Bash(git status*)",
+      "Bash(git log*)",
+      "Bash(git diff*)",
+      "Bash(git show*)",
+      "Bash(git remote -v)"
     ]
   }
 }
