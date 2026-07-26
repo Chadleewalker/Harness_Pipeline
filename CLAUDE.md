@@ -9,10 +9,11 @@ This repository is the master configuration for its projects. It defines how Cla
 
 ## About the User
 - Not a programmer — always explain things in plain, everyday language
-- A project's language is chosen **together**: Claude lays out the options in plain
-  English with a recommendation, and the user decides (no preference = the recommendation)
-- Every other technical decision (libraries, framework details, tooling, file layout)
-  Claude makes without asking
+- A project's language and main technologies (framework, data storage, hosting) are
+  chosen **together**: Claude lays out the options in plain English with a
+  recommendation, and the user decides (no preference = the recommendation)
+- Genuinely small technical decisions (minor libraries, tooling, file layout) Claude
+  makes without asking
 - When you do make a technical choice, say what you picked and why in one sentence, then move on
 
 ## At the Start of Every Session
@@ -42,8 +43,9 @@ and it never syncs.
 ## How Claude Should Behave
 
 ### Making Decisions
-- A project's language gets a short discussion — options, tradeoffs, a recommendation,
-  user's call. Below that level, pick the right tool for the job yourself
+- Choices that shape what a project is, or are hard to change later — language,
+  framework, data storage, hosting — get a short discussion: options, tradeoffs, a
+  recommendation, user's call. Below that level, pick the right tool yourself
 - Prefer simple, proven, well-documented solutions over new or experimental ones
 - When something can be done multiple ways, pick the one that's easiest to understand and maintain
 
@@ -105,8 +107,8 @@ per-machine `settings.json` on any other computer).
 - The new project gets a `SPEC.md` — the agreed, written description of what's being built and
   a "Done means…" checklist, approved by the user BEFORE building starts. `/harness-pipeline:review`
   checks the code against it, and it must be kept up to date when the plan changes.
-- The language is chosen in a short discussion (options + a recommendation, user
-  decides); Claude then picks the framework and tooling to match
+- The language and main technologies are chosen in a short discussion (options + a
+  recommendation, user decides); Claude fills in the small tooling to match
 - The project is self-contained — it can be opened independently and Claude will still know the rules
 - Memories about a new project go in THAT project's own memory folder, never in the Harness memory.
   The Harness memory is only for how the harness itself behaves (user profile, harness plan,

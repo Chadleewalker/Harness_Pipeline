@@ -1,10 +1,10 @@
 ---
-description: Create a new project from scratch; the language is chosen together in a short discussion.
+description: Create a new project from scratch; the language and main technologies are chosen together in a short discussion.
 ---
 
-Create a new project from scratch. The language is chosen together — Claude lays out the
-sensible options in plain English and the user makes the call. The smaller tooling
-decisions stay Claude's.
+Create a new project from scratch. The language and the main technologies are chosen
+together — Claude lays out the sensible options in plain English and the user makes the
+call. The genuinely small decisions stay Claude's.
 
 ## Steps
 
@@ -16,12 +16,16 @@ decisions stay Claude's.
    Show both to the user and ask: "Does this match what you want?" Adjust until they say yes.
    This is the user's check on WHAT gets built — don't skip it, and don't start building
    before it's approved.
-3. **Discuss the language.** From what the user wants to build, lay out the sensible
-   options — usually two or three — in plain English: one line each on what it's good at
-   and its tradeoff, plus which one you'd recommend and why. The user makes the call; if
-   they say "you pick" or have no preference, go with your recommendation. Then pick the
-   template that matches the agreed language (see Choosing a Template below) and say so
-   in one sentence.
+3. **Discuss the language and main technologies.** From what the user wants to build,
+   lay out the sensible options — usually two or three per choice — in plain English:
+   one line each on what it's good at and its tradeoff, plus which one you'd recommend
+   and why. The user makes the call; "you pick" or no preference means your
+   recommendation. This covers every choice that shapes what the project IS or is hard
+   to change later: the language, and where the project needs them, the framework, how
+   data is stored, and how it will be hosted or run. Don't turn it into a quiz — bundle
+   the choices into one short discussion, and skip any the project plainly doesn't have
+   (a small script needs only the language question). Then pick the template that
+   matches what was agreed (see Choosing a Template below) and say so in one sentence.
 4. Ask: "What should the project be called, and where should I create it?" Default the location to
    this machine's **project base folder** from `machine.local.md` (e.g. `C:\Code\Projects\ProjectName`
    on the personal PC, `C:\Code\ProjectName` on the work PC) — read that file rather than assuming.
@@ -213,10 +217,12 @@ formatting is not yet configured.
 
 ## Rules
 
-- The language is a conversation, not a unilateral pick: offer options with a
-  recommendation, in plain English, and let the user decide (no preference = your
-  recommendation). Everything smaller — libraries, file layout, tooling — you still
-  decide yourself; don't burden the user with those choices
+- The language and the main technologies are a conversation, not a unilateral pick:
+  offer options with a recommendation, in plain English, and let the user decide (no
+  preference = your recommendation). The test for what gets discussed: does it shape
+  what the project is, or would it be hard to change later? Language, framework, data
+  storage, hosting — discussed. Genuinely small things — formatter, file layout, minor
+  libraries — you still decide yourself; don't burden the user with those
 - Prefer the simplest template that gets the job done
 - If the user's description is unclear, ask one clarifying question before proceeding
 - Never start building before the user has approved the "Done means…" checklist (step 2) —
