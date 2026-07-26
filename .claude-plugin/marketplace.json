@@ -1,15 +1,15 @@
 {
-  "name": "harness",
-  "description": "Chad's Universal AI Harness — plain-English skills for running, reviewing, deploying, committing, scaffolding, and health-checking projects.",
+  "name": "harness-pipeline",
+  "description": "Chad's Universal AI Harness, Pipeline edition — skills for projects that run through the overnight Multi-AgentPipelines system.",
   "owner": {
     "name": "Chad Walker",
     "email": "chadleewalker@gmail.com"
   },
   "plugins": [
     {
-      "name": "harness",
-      "source": "./plugins/harness",
-      "description": "Universal AI Harness — plain-English skills for running, reviewing, deploying, committing, scaffolding, and health-checking projects."
+      "name": "harness-pipeline",
+      "source": "./plugins/harness-pipeline",
+      "description": "Universal AI Harness (Pipeline edition) — plain-English skills for running, reviewing, deploying, committing, scaffolding, health-checking, and pipeline-onboarding projects."
     }
   ]
 }

@@ -1,6 +1,11 @@
-# Universal AI Harness
+# Universal AI Harness — Pipeline Edition
 
-This repository is the master configuration for all projects. It defines how Claude should behave, what tools are available, and how new projects get created. Every project created with `/scaffold` inherits these rules.
+This repository (`Harness_Pipeline`, GitHub `Chadleewalker/Harness_Pipeline`) is a **separate
+project from the original Harness** (`C:\Code\New Project Start\Harness`). It is the master
+configuration for projects that work with the overnight pipeline (`Multi-AgentPipelines`);
+the original Harness stays as it was. Don't push commits between the two.
+
+This repository is the master configuration for its projects. It defines how Claude should behave, what tools are available, and how new projects get created. Every project created with `/scaffold` inherits these rules.
 
 ## About the User
 - Not a programmer — always explain things in plain, everyday language
@@ -10,7 +15,7 @@ This repository is the master configuration for all projects. It defines how Cla
 ## At the Start of Every Session
 1. Read `machine.local.md` (in this Harness folder) for THIS computer's specifics — see
    "Per-Machine Local Config" below. Its values win over any machine-specific example in these docs.
-2. Check `C:\Code\New Project Start\Harness\known-issues.md` for any open issues
+2. Check `C:\Code\New Project Start\Harness_Pipeline\known-issues.md` for any open issues
 3. If open issues exist, mention them briefly so the user knows what to watch for
 4. Check memory for current project status and resume where things left off
 
@@ -51,50 +56,50 @@ and it never syncs.
 - Any action that can't be easily undone
 
 ## Available Skills
-These ship inside the **harness plugin** and are typed with a `harness:` prefix (e.g. `/harness:run`).
+These ship inside the **harness-pipeline plugin** and are typed with a `harness-pipeline:` prefix (e.g. `/harness-pipeline:run`).
 They work in any project on a machine where the plugin is installed and enabled.
 
 | Skill | What it does |
 |---|---|
-| `/harness:scaffold` | Creates a new project from scratch |
-| `/harness:run` | Starts the current project |
-| `/harness:review` | Reviews code and explains findings in plain English |
-| `/harness:deploy` | Deploys the current project |
-| `/harness:issues` | Logs or shows recurring setup problems |
-| `/harness:commit` | Commits all changes and pushes to GitHub |
-| `/harness:harness-check` | Health-checks the harness wiring and reports problems in plain English |
-| `/harness:pipeline-onboard` | Makes the current project a valid target for the overnight pipeline (follows `ONBOARDING.md` in the pipeline repo) |
+| `/harness-pipeline:scaffold` | Creates a new project from scratch |
+| `/harness-pipeline:run` | Starts the current project |
+| `/harness-pipeline:review` | Reviews code and explains findings in plain English |
+| `/harness-pipeline:deploy` | Deploys the current project |
+| `/harness-pipeline:issues` | Logs or shows recurring setup problems |
+| `/harness-pipeline:commit` | Commits all changes and pushes to GitHub |
+| `/harness-pipeline:harness-check` | Health-checks the harness wiring and reports problems in plain English |
+| `/harness-pipeline:pipeline-onboard` | Makes the current project a valid target for the overnight pipeline (follows `ONBOARDING.md` in the pipeline repo) |
 
-The skills live in `plugins\harness\commands\` in this repo — that's the single source of truth.
+The skills live in `plugins\harness-pipeline\commands\` in this repo — that's the single source of truth.
 Install or update the plugin on any machine with:
-- `/plugin marketplace add Chadleewalker/Harness`  (once per machine)
-- `/plugin install harness@harness`                (once per machine)
-- `/plugin update harness@harness`                 (to pull later changes)
+- `/plugin marketplace add Chadleewalker/Harness_Pipeline`  (once per machine)
+- `/plugin install harness-pipeline@harness-pipeline`                (once per machine)
+- `/plugin update harness-pipeline@harness-pipeline`                 (to pull later changes)
 
 ## Project Structure
 ```
-C:\Code\New Project Start\Harness\
+C:\Code\New Project Start\Harness_Pipeline\
 ├── CLAUDE.md                          ← This file (master rules)
 ├── .claude\
 │   └── settings.json                  ← Per-machine permission allow-list (plugins can't ship permissions)
 ├── .claude-plugin\
 │   └── marketplace.json               ← Marketplace listing (this repo is its own "store")
-├── plugins\harness\
+├── plugins\harness-pipeline\
 │   ├── .claude-plugin\plugin.json     ← The plugin's ID card
 │   └── commands\                      ← The skills — single source of truth
-├── templates\                         ← Project templates used by /harness:scaffold
+├── templates\                         ← Project templates used by /harness-pipeline:scaffold
 └── known-issues.md                    ← Running log of setup problems
 ```
 
 The skills travel inside the plugin, so there's no separate backup folder to keep in sync — pull
-changes on any machine with `/plugin update harness@harness`. The one thing a plugin **cannot**
+changes on any machine with `/plugin update harness-pipeline@harness-pipeline`. The one thing a plugin **cannot**
 carry is the permission allow-list; that stays in `.claude\settings.json` here (and in a small
 per-machine `settings.json` on any other computer).
 
 ## When Creating a New Project with /scaffold
 - The new project gets its own `CLAUDE.md` that references this master
 - The new project gets a `SPEC.md` — the agreed, written description of what's being built and
-  a "Done means…" checklist, approved by the user BEFORE building starts. `/harness:review`
+  a "Done means…" checklist, approved by the user BEFORE building starts. `/harness-pipeline:review`
   checks the code against it, and it must be kept up to date when the plan changes.
 - Claude picks the language and framework based on what the user wants to build
 - The project is self-contained — it can be opened independently and Claude will still know the rules
@@ -110,7 +115,7 @@ quietly break in the other, so anything Claude builds must work in BOTH unless t
 - Paths look like `C:\Code\...` — backslashes and a drive letter.
 - PowerShell is available.
 - Commands: `python`, `npx.cmd`, `node`.
-- The Harness folder (`C:\Code\New Project Start\Harness`) is present and reachable.
+- The Harness folder (`C:\Code\New Project Start\Harness_Pipeline`) is present and reachable.
 
 **2. yolo_docker container** (a numbered Linux container with root access, opened as code-server
 in the browser — see "The yolo_docker Sandbox" below for the full picture)
@@ -131,7 +136,7 @@ in the browser — see "The yolo_docker Sandbox" below for the full picture)
 - For hook-specific guidance, see "Cross-Platform Hooks" further below.
 
 **Note on the master-rules import.** Every scaffolded `CLAUDE.md` has a line like
-`@C:\Code\New Project Start\Harness\CLAUDE.md`. That loads these master rules on Windows, but that
+`@C:\Code\New Project Start\Harness_Pipeline\CLAUDE.md`. That loads these master rules on Windows, but that
 path does not exist inside the container, so the import silently does nothing there. That's why the
 essential environment facts are ALSO embedded directly in each project's `CLAUDE.md` — so a project
 opened alone in the sandbox still understands where it runs.

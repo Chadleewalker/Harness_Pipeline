@@ -35,9 +35,9 @@ drop the drive colon, and turn every `\` (and `:`) into `-`. The memory folder i
 Examples:
 
 - `C:\Code\Projects\AudioViz` → `C--Code-Projects-AudioViz`
-- `C:\Code\New Project Start\Harness` → `C--Code-New-Project-Start-Harness`
+- `C:\Code\New Project Start\Harness_Pipeline` → `C--Code-New-Project-Start-Harness`
 
-The folder already exists (every project is built with `/harness:scaffold`, which creates it). Write
+The folder already exists (every project is built with `/harness-pipeline:scaffold`, which creates it). Write
 project facts there, never in another project's folder.
 
 **1. Memory** — record where things stand: what this session changed, the current status, and the

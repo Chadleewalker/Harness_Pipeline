@@ -14,8 +14,9 @@ Work out the environment first, because paths differ:
 - Find the current user's home folder (`$env:USERPROFILE` on Windows, `$HOME` on Linux/Docker).
   The live global config lives at `<home>/.claude/`.
 - Find the harness repo. Prefer the path in the current project's `CLAUDE.md` import line
-  (`@.../Harness/CLAUDE.md`); otherwise look for a folder named `Harness` containing
-  `.claude-plugin/marketplace.json`. If you can't find it, say so and skip the checks that need it.
+  (`@.../Harness_Pipeline/CLAUDE.md`); otherwise look for a folder named `Harness_Pipeline`
+  containing `.claude-plugin/marketplace.json`. If you can't find it, say so and skip the
+  checks that need it.
 
 Then run these checks and report each as ✅ (good), ⚠️ (worth fixing), or ❌ (broken), each with
 a one-line plain-English explanation and, if not ✅, the suggested fix.
@@ -25,10 +26,10 @@ a one-line plain-English explanation and, if not ✅, the suggested fix.
 2. **Master rules reachable.** Confirm the harness `CLAUDE.md` exists at the path the templates'
    `@import` line points to. If it's missing, scaffolded projects won't inherit the rules.
 3. **Plugin installed & enabled.** Confirm the harness plugin is live: `<home>/.claude/plugins/installed_plugins.json`
-   lists `harness@harness`, and `<home>/.claude/settings.json` has it under `enabledPlugins`. Then
-   confirm the seven command files exist in the repo's `plugins/harness/commands/` (commit, deploy,
-   issues, review, run, harness-check, scaffold). Remember: these are typed with the `harness:` prefix
-   (e.g. `/harness:run`). List anything missing.
+   lists `harness-pipeline@harness-pipeline`, and `<home>/.claude/settings.json` has it under `enabledPlugins`. Then
+   confirm the eight command files exist in the repo's `plugins/harness-pipeline/commands/` (commit,
+   deploy, issues, review, run, harness-check, scaffold, pipeline-onboard). Remember: these are typed
+   with the `harness-pipeline:` prefix (e.g. `/harness-pipeline:run`). List anything missing.
 4. **Permissions present.** Plugins can't ship permission rules, so they live in a per-machine
    `settings.json`. Confirm the harness `.claude/settings.json` (and/or `<home>/.claude/settings.json`)
    still has a permission allow-list. If it's empty, routine commands will prompt every time.

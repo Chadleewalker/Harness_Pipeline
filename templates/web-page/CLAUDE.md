@@ -5,7 +5,7 @@
 This project was created with the Universal AI Harness. The line below automatically
 loads the master rules every session — don't remove it.
 
-@C:\Code\New Project Start\Harness\CLAUDE.md
+@C:\Code\New Project Start\Harness_Pipeline\CLAUDE.md
 
 ## Where This Project Runs (works in both)
 This project runs in two places, and code must work in both:

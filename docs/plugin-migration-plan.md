@@ -11,9 +11,9 @@
 Setting up or updating the harness on **any** machine becomes:
 
 ```
-/plugin marketplace add Chadleewalker/Harness     (once per machine)
-/plugin install harness@harness                    (once per machine)
-/plugin update  harness@harness                    (to pull later changes)
+/plugin marketplace add Chadleewalker/Harness_Pipeline     (once per machine)
+/plugin install harness-pipeline@harness-pipeline                    (once per machine)
+/plugin update  harness-pipeline@harness-pipeline                    (to pull later changes)
 ```
 
 No more hand-copying files into `C:\Users\...\.claude\`, no more "live vs backup" drift, and
@@ -21,7 +21,7 @@ Windows + the Linux container get the identical setup from the same GitHub repo.
 
 ## Repo layout
 
-The existing `Chadleewalker/Harness` repo becomes **both** the marketplace and the plugin:
+The existing `Chadleewalker/Harness_Pipeline` repo becomes **both** the marketplace and the plugin:
 
 ```
 Harness/
@@ -55,10 +55,10 @@ The `global-config\` backup folder is retired at Phase 4 — the plugin replaces
 
 ## Three consequences of how plugins work
 
-1. **Command names get a prefix.** `/commit` -> `/harness:commit`, etc. Unavoidable by design.
+1. **Command names get a prefix.** `/commit` -> `/harness-pipeline:commit`, etc. Unavoidable by design.
 2. **Permission rules can't live in the plugin.** They stay in a small per-machine `settings.json`.
 3. **`/scaffold` inheritance needs a rethink.** New projects today point at an absolute path
-   (`C:\Code\New Project Start\Harness\CLAUDE.md`) that won't exist on another machine. In
+   (`C:\Code\New Project Start\Harness_Pipeline\CLAUDE.md`) that won't exist on another machine. In
    plugin-world, new projects should install the harness plugin too, or `/scaffold` copies the
    rules straight in. This also fixes the hard-coded-path problem (review item #5).
 
@@ -66,7 +66,7 @@ The `global-config\` backup folder is retired at Phase 4 — the plugin replaces
 
 - **Phase 1 — build alongside the old setup (additive; nothing removed).** ✅ Added `marketplace.json`,
   `plugin.json`, copied commands into `plugins/harness/commands/`.
-- **Phase 2 — test on Windows.** ✅ Installed and enabled (`harness@harness`); commands run.
+- **Phase 2 — test on Windows.** ✅ Installed and enabled (`harness-pipeline@harness-pipeline`); commands run.
 - **Phase 3 — test in the Linux container.** ⬜ Still to do: install the plugin *inside* the
   container and confirm the Bash side. Needs `launch-project.bat` → container → `/plugin` commands.
 - **Phase 4 — adopt.** ✅ Deleted the `~/.claude/commands\` copies, the harness-local

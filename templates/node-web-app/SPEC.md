@@ -2,7 +2,7 @@
 
 > This file is the project's spec: the agreed, written description of what we're building and
 > what "done" means. Claude reads it at the start of a session to know the goal, and
-> `/harness:review` checks the code against the "Done means" list below. When the plan changes,
+> `/harness-pipeline:review` checks the code against the "Done means" list below. When the plan changes,
 > update this file (with the user's OK) — don't let it drift out of date.
 
 ## The goal in one sentence

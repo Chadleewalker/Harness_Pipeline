@@ -5,7 +5,7 @@
 This project was created with the Universal AI Harness. The line below automatically
 loads the master rules every session — don't remove it.
 
-@C:\Code\New Project Start\Harness\CLAUDE.md
+@C:\Code\New Project Start\Harness_Pipeline\CLAUDE.md
 
 ## Where This Project Runs (works in both)
 This project runs in two places, and code must work in both:
@@ -43,5 +43,5 @@ duplicated here on purpose.
 - Server entry point: `server.js` (serves the site and handles requests)
 - Front-end files live in `public\`
 - Dependencies are listed in `package.json`
-- Start it with `npm start` (or ask Claude to `/harness:run` it)
+- Start it with `npm start` (or ask Claude to `/harness-pipeline:run` it)
 - Formatting: handled automatically on save by `prettier` (see `.claude\hooks\format.js`)

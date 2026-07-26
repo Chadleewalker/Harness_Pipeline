@@ -4,7 +4,7 @@
 
 ## How to see it
 
-Just open `index.html` in your web browser (double-click it), or ask Claude to `/harness:run` it.
+Just open `index.html` in your web browser (double-click it), or ask Claude to `/harness-pipeline:run` it.
 
 There's nothing to install — it's a plain website.
 

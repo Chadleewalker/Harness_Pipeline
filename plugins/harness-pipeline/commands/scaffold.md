@@ -27,7 +27,7 @@ Create a new project from scratch. Claude picks the right language and tools bas
 10. Ask: "Will this project also run in a yolo_docker container?" If yes, do the yolo_docker
     setup (see Setting Up for yolo_docker below).
 11. Ask: "Will the overnight pipeline work on this project?" If yes, run
-    `/harness:pipeline-onboard` — it follows the checklist in the pipeline repo's
+    `/harness-pipeline:pipeline-onboard` — it follows the checklist in the pipeline repo's
     `ONBOARDING.md` (config file, frozen-test folder, Docker image, `CLAUDE.md` changes).
     A project can be onboarded later instead; the question is just cheapest to answer now.
 12. Show the user a summary of what was created and how to run it, in plain language.
@@ -37,7 +37,7 @@ Create a new project from scratch. Claude picks the right language and tools bas
 ## The SPEC.md File
 
 Every project gets a `SPEC.md` in its root — the agreed, written description of what's being
-built and what "done" means. It is the file `/harness:review` checks the code against, and the
+built and what "done" means. It is the file `/harness-pipeline:review` checks the code against, and the
 file a future session (or another agent in the sandbox) reads to know the goal. The templates
 include a `SPEC.md` with placeholders; fill them from the spec the user approved in step 2:
 
@@ -94,7 +94,7 @@ yolo_docker") — don't strip that section.
 
 ## Where Project Memories Go
 
-The Harness memory (`<your-home>\.claude\projects\C--Code-New-Project-Start-Harness\memory\`, where `<your-home>` is the current user's home folder) is ONLY for how the
+The Harness memory (`<your-home>\.claude\projects\C--Code-New-Project-Start-Harness-Pipeline\memory\`, where `<your-home>` is the current user's home folder) is ONLY for how the
 harness itself behaves — the user profile, the harness plan, and feedback on how Claude should work.
 Anything about a specific project you scaffold (its status, stack, gotchas, decisions) goes in that
 project's own memory folder, so the Harness memory stays clean.
@@ -112,7 +112,7 @@ memory files alongside it — exactly the structure the Harness memory uses.
 
 ## Choosing a Template
 
-Templates live in `C:\Code\New Project Start\Harness\templates\`. Pick the closest match:
+Templates live in `C:\Code\New Project Start\Harness_Pipeline\templates\`. Pick the closest match:
 
 | If the user wants…                                                                | Use template    |
 | --------------------------------------------------------------------------------- | --------------- |
@@ -124,7 +124,7 @@ If nothing fits (e.g. a mobile app, a game engine project, something unusual), d
 template — build the project from scratch instead, and still create a local `CLAUDE.md`, a
 `SPEC.md` (copy the structure from any template's `SPEC.md` and fill it from the approved
 spec), a `.claude\settings.json` + `.claude\hooks\format.js` format hook (see Format Hook
-Fallback), and a README. The local `CLAUDE.md` must contain the line `@C:\Code\New Project Start\Harness\CLAUDE.md` on its own
+Fallback), and a README. The local `CLAUDE.md` must contain the line `@C:\Code\New Project Start\Harness_Pipeline\CLAUDE.md` on its own
 line — that's what loads the master rules automatically in the new project. It must ALSO contain the
 self-contained "Where This Project Runs" section AND its "Working inside yolo_docker" subsection
 (copy both verbatim from any template's `CLAUDE.md`), because that import line does not resolve

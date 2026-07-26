@@ -14,7 +14,7 @@
    ```
 3. Open your browser to http://localhost:3000
 
-Or just ask Claude to `/harness:run` it.
+Or just ask Claude to `/harness-pipeline:run` it.
 
 ## How it's organized
 - `server.js` — the backend server (serves the site, handles requests, can save data)
