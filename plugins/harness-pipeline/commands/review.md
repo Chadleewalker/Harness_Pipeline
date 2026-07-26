@@ -26,7 +26,8 @@ Review the current code changes and explain findings in plain, everyday language
 7. Ask if the user wants you to fix anything
 
 ## Rules
-- Explain every finding as if the user has never programmed before
+- Explain findings at the user's explanation level (from `machine.local.md`; when
+  unset, as if the user has never programmed before)
 - Don't flag style preferences as bugs — only report things that actually matter
 - If everything looks good, say so clearly — don't invent problems
 - The spec is the yardstick: "the code runs" is not the same as "the project does what was

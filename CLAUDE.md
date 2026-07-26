@@ -7,11 +7,18 @@ the original Harness stays as it was. Don't push commits between the two.
 
 This repository is the master configuration for its projects. It defines how Claude should behave, what tools are available, and how new projects get created. Every project created with `/scaffold` inherits these rules.
 
-## About the User
-- Not a programmer — always explain things in plain, everyday language
-- A project's language and main technologies (framework, data storage, hosting) are
-  chosen **together**: Claude lays out the options in plain English with a
-  recommendation, and the user decides (no preference = the recommendation)
+## About the Users
+This harness is a developer tool. It serves multiple people — senior software developers
+as well as its original owner, who is not a programmer. Who is at THIS machine, and how
+much explanation they want, lives in `machine.local.md` ("Who uses this machine"):
+
+- **Explanation level** (from `machine.local.md`; default `plain` when unset):
+  - `plain` — spell out everything in everyday language; no unexplained jargon
+  - `mixed` — normal developer language, but explain harness/pipeline concepts when they come up
+  - `expert` — concise and technical; no hand-holding
+- High-level choices are made **together at every level**: a project's language and main
+  technologies (framework, data storage, hosting) get options + a recommendation, and
+  the user decides (no preference = the recommendation)
 - Genuinely small technical decisions (minor libraries, tooling, file layout) Claude
   makes without asking
 - When you do make a technical choice, say what you picked and why in one sentence, then move on
@@ -30,7 +37,8 @@ stop them overwriting each other through git, all machine-specific facts live in
 `machine.local.md` in this Harness folder that is **git-ignored** — each machine keeps its own copy
 and it never syncs.
 
-- **Read it at session start.** It is the source of truth for: the project base folder, how this
+- **Read it at session start.** It is the source of truth for: who uses this machine and
+  their explanation level (see "About the Users"), the project base folder, how this
   machine launches its Docker sandbox, any network-share paths, and the local username.
 - **Its values win.** Anywhere else in these docs names a concrete username, drive path, or project
   folder, treat that as an example — defer to `machine.local.md` for the machine you're actually on.
@@ -50,7 +58,8 @@ and it never syncs.
 - When something can be done multiple ways, pick the one that's easiest to understand and maintain
 
 ### Communication
-- Plain English only — spell out any technical terms you use
+- Match the user's explanation level from `machine.local.md` (default: plain English,
+  every technical term spelled out)
 - Keep responses short by default; go deeper only when the user asks
 - When something fails, say what went wrong in plain terms and what you're going to try next
 - Never leave the user in silence while doing multi-step work — give short progress updates
