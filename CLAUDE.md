@@ -2,7 +2,7 @@
 
 This repository (`Harness_Pipeline`, GitHub `Chadleewalker/Harness_Pipeline`) is a **separate
 project from the original Harness** (`C:\Code\New Project Start\Harness`). It is the master
-configuration for projects that work with the overnight pipeline (`Multi-AgentPipelines`);
+configuration for projects that work with the autonomous pipeline (`Multi-AgentPipelines`);
 the original Harness stays as it was. Don't push commits between the two.
 
 This repository is the master configuration for its projects. It defines how Claude should behave, what tools are available, and how new projects get created. Every project created with `/scaffold` inherits these rules.
@@ -83,7 +83,7 @@ They work in any project on a machine where the plugin is installed and enabled.
 | `/harness-pipeline:issues` | Logs or shows recurring setup problems |
 | `/harness-pipeline:commit` | Commits all changes and pushes to GitHub |
 | `/harness-pipeline:harness-check` | Health-checks the harness wiring and reports problems in plain English |
-| `/harness-pipeline:pipeline-onboard` | Makes the current project a valid target for the overnight pipeline (follows `ONBOARDING.md` in the pipeline repo) |
+| `/harness-pipeline:pipeline-onboard` | Makes the current project a valid target for the pipeline (follows `ONBOARDING.md` in the pipeline repo) |
 
 The skills live in `plugins\harness-pipeline\commands\` in this repo — that's the single source of truth.
 Install or update the plugin on any machine with:

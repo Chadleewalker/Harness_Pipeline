@@ -37,7 +37,7 @@ call. The genuinely small decisions stay Claude's.
 9. Build what `SPEC.md` says, beyond what the starter files already cover.
 10. Ask: "Will this project also run in a yolo_docker container?" If yes, do the yolo_docker
     setup (see Setting Up for yolo_docker below).
-11. Ask: "Will the overnight pipeline work on this project?" If yes, run
+11. Ask: "Will the pipeline work on this project?" If yes, run
     `/harness-pipeline:pipeline-onboard` — it follows the checklist in the pipeline repo's
     `ONBOARDING.md` (config file, frozen-test folder, Docker image, `CLAUDE.md` changes).
     A project can be onboarded later instead; the question is just cheapest to answer now.

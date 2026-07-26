@@ -1,8 +1,8 @@
 ---
-description: Make the current project a valid target for the overnight pipeline.
+description: Make the current project a valid target for the pipeline.
 ---
 
-Set up the current project so the overnight pipeline (the Multi-AgentPipelines repo)
+Set up the current project so the autonomous pipeline (the Multi-AgentPipelines repo)
 can run tasks against it. Works for freshly scaffolded projects and existing ones.
 
 **The checklist itself lives in the pipeline's repo — `ONBOARDING.md` at its root —
