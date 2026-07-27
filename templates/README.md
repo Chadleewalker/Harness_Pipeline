@@ -28,3 +28,19 @@ Template files contain these markers, which `/harness-pipeline:scaffold` replace
 
 `/harness-pipeline:scaffold` runs `git init` and installs dependencies after copying — those steps are not baked
 into the templates.
+
+## Licensing of scaffolded projects
+
+**A project you scaffold is yours.** The Apache-2.0 license at the root of this repository
+covers the harness — its skills, its rules, its documentation. It does not extend to the
+projects stamped out from these templates, and it makes no claim on the code you write in
+them.
+
+That is why no file in `templates/` carries a copyright header. These files are copied
+verbatim into your new project, so a header here would follow the copy and assert
+authorship over work that isn't the harness's. The starter content is deliberately
+unlicensed boilerplate — use it, change it, or delete it, and license the result however
+you want.
+
+If you want a new project to carry a license, add one after scaffolding. `/harness-pipeline:scaffold`
+does not add one for you, because the right choice depends on what the project is for.
