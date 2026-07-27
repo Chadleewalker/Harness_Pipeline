@@ -47,6 +47,16 @@ and it never syncs.
   templates, or the skills.
 - **A new computer needs its own copy.** If `machine.local.md` is missing, ask the user the few
   facts above and write one (copy the structure from another machine's file).
+- **Placeholders in these docs resolve from it.** This repository is public, so the tracked
+  files never name a real host or share. Where you see one of these, read the real value out
+  of `machine.local.md` before acting — never write to the literal placeholder path:
+
+  | Placeholder | What it stands for |
+  |---|---|
+  | `<git-share-drive>` | the Windows drive path to the bare-repo folder on the network share |
+  | `<git-share-unc>` | the same folder's UNC path, as seen from inside a container |
+
+  If `machine.local.md` does not define them, ask the user rather than guessing.
 
 ## How Claude Should Behave
 

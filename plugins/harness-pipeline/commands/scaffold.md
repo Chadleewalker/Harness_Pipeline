@@ -86,6 +86,9 @@ Linux sandbox described in the master `CLAUDE.md` ("The yolo_docker Sandbox"). P
 through git only — a bare repo on the network share — never a bind mount. If the user says the new
 project will run there:
 
+`<git-share-drive>` and `<git-share-unc>` below are placeholders — resolve both from
+`machine.local.md` before doing anything, and ask the user if it does not define them.
+
 1. Create a bare repo on the network share at `<git-share-drive>\<project_name>.git`
    (`git init --bare`). Confirm with the user before writing to the git share.
 2. Add it as the project's remote and push (confirm before pushing, per the safety rules):
