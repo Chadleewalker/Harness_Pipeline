@@ -1,6 +1,6 @@
 {
   "name": "harness-pipeline",
-  "description": "Universal AI Harness (Pipeline edition) — plain-English skills for running, reviewing, deploying, committing, scaffolding, health-checking, and pipeline-onboarding projects.",
+  "description": "Universal AI Harness (Pipeline edition) — plain-English skills for designing, running, reviewing, deploying, committing, scaffolding, health-checking, and pipeline-onboarding projects.",
   "version": "0.4.1",
   "author": {
     "name": "Chad Walker"
