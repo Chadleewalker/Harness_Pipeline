@@ -29,16 +29,19 @@ This skill is meant to be run at the end of a work session, so every run is a re
 worth recording. Do all of this for the project you're CURRENTLY working in — never assume a
 fixed path.
 
-**Find the current project's memory folder.** Take the current working directory's full path,
-drop the drive colon, and turn every `\` (and `:`) into `-`. The memory folder is:
-`<your-home>\.claude\projects\<ENCODED_PATH>\memory\` (where `<your-home>` is the current user's home folder, e.g. `C:\Users\<you>`)
-Examples:
+**Find the current project's memory folder.** Take the **current working directory's** full path
+and turn every `\`, `:` and space into `-`. The memory folder is
+`<your-home>\.claude\projects\<ENCODED_PATH>\memory\`, where `<your-home>` is the current user's
+home folder. So a project at `<drive>:\<a>\<b>\<Name>` encodes to `<drive>--<a>-<b>-<Name>`.
 
-- `C:\Code\Projects\AudioViz` → `C--Code-Projects-AudioViz`
-- `C:\Code\New Project Start\Harness_Pipeline` → `C--Code-New-Project-Start-Harness`
+**Derive it from the working directory every time — never copy an encoded name out of a document.**
+The failure mode is silent: a name that drops or mangles one segment is still a perfectly valid
+folder name, so the write succeeds and the notes land somewhere nobody looks. This skill's own
+example was wrong for exactly that reason — it dropped a trailing segment and pointed harness
+notes at the retired Harness's memory folder.
 
-The folder already exists (every project is built with `/harness-pipeline:scaffold`, which creates it). Write
-project facts there, never in another project's folder.
+The folder normally already exists (`/harness-pipeline:scaffold` creates it); create it if it
+doesn't. Write project facts there, never in another project's folder.
 
 **1. Memory** — record where things stand: what this session changed, the current status, and the
 next step if there is one. Follow the existing memory format (one fact per file with frontmatter)

@@ -3,7 +3,13 @@ description: Log or show recurring setup problems.
 ---
 Track recurring setup problems so Claude can avoid them in future sessions.
 
-Issues are stored in `C:\Code\New Project Start\Harness_Pipeline\known-issues.md`.
+Issues are stored in `known-issues.md` in the Harness folder — this machine's path for it is
+the **Harness folder** entry in `machine.local.md`.
+
+**Scope: this harness, the yolo_docker sandbox, and Claude Code wiring.** Gotchas belonging to
+the autonomous pipeline go in `docs/STATUS.md` in the `Multi-AgentPipelines` repo instead, which
+is their only home — see the note at the top of `known-issues.md`. If the user reports a pipeline
+gotcha here, say where it belongs rather than logging a second copy of it.
 
 ## Usage
 - `/harness-pipeline:issues` — Show all open issues

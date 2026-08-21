@@ -23,23 +23,50 @@ a one-line plain-English explanation and, if not ✅, the suggested fix.
 
 1. **Username/path sanity.** Scan the harness repo's config files for any `C:\Users\<name>` that
    is NOT the current user's name. A mismatch means paths point at a folder that doesn't exist.
-2. **Master rules reachable.** Confirm the harness `CLAUDE.md` exists at the path the templates'
-   `@import` line points to. If it's missing, scaffolded projects won't inherit the rules.
+2. **Master rules reachable.** Confirm the harness `CLAUDE.md` exists at the **Harness folder**
+   path recorded in `machine.local.md` — that is what `/harness-pipeline:scaffold` stamps into a
+   new project's `@`-import line. If it's wrong, scaffolded projects won't inherit the rules.
+   In the *templates* that line is the literal placeholder `@{{HARNESS_PATH}}\CLAUDE.md`, which is
+   correct and must not be "fixed" to a real path — a real one would be wrong on every other
+   machine and would leak this one's layout into a published repo. Flag it as ❌ only if a
+   template has a concrete path baked in. In an already-scaffolded *project*, the same line
+   should be a real path; check that it resolves.
 3. **Plugin installed & enabled.** Confirm the harness plugin is live: `<home>/.claude/plugins/installed_plugins.json`
    lists `harness-pipeline@harness-pipeline`, and `<home>/.claude/settings.json` has it under `enabledPlugins`. Then
    confirm the eight command files exist in the repo's `plugins/harness-pipeline/commands/` (commit,
    deploy, issues, review, run, harness-check, scaffold, pipeline-onboard). Remember: these are typed
    with the `harness-pipeline:` prefix (e.g. `/harness-pipeline:run`). List anything missing.
-4. **Permissions present.** Plugins can't ship permission rules, so they live in a per-machine
+4. **Exactly one source per command.** Count where each command could come from, and report ⚠️ if
+   any name has more than one live source. Look in all three places: `<home>/.claude/commands/`
+   (loose files, which take the *unprefixed* name), every entry in `enabledPlugins` set to `true`,
+   and the current project's `.claude/commands/`. This exists because it has already gone wrong:
+   in July 2026 `/commit` existed three times — a June file in `<home>/.claude/commands`, the
+   retired `harness@harness` plugin, and `harness-pipeline` — with nothing to warn about it, and
+   the oldest copy was the unprefixed one, so it was the easiest to invoke by accident.
+   `harness@harness` is retired: if it is present and `true`, that itself is the finding.
+5. **Publication hygiene.** Run `node scripts/check-sanitize.js` in the harness repo and report
+   what it says. It checks that no tracked file names a real absolute path, network share, email
+   address or denylisted private name — the boundary that lets this repo be published while being
+   used on private work. Its `NOTE` about a missing `.sanitize-denylist` is fine on a machine that
+   has never held private work; on one that has, it means the name checks are silently off, which
+   is worth a ⚠️ and a pointer to `.sanitize-denylist.example`. This is the one check that reads a
+   script's exit code rather than judging by eye — quote its output rather than summarizing it.
+6. **Permissions present.** Plugins can't ship permission rules, so they live in a per-machine
    `settings.json`. Confirm the harness `.claude/settings.json` (and/or `<home>/.claude/settings.json`)
    still has a permission allow-list. If it's empty, routine commands will prompt every time.
-5. **Safety hook status.** Report whether a PreToolUse safety hook is configured (in the live
+7. **Safety hook status.** Report whether a PreToolUse safety hook is configured (in the live
    `<home>/.claude/settings.json` or the plugin's `hooks/hooks.json`) and whether the hook file it
    names actually exists. If absent, note it's currently not active (don't treat as an error unless
    the user wants it on).
-6. **Current project wiring.** If the working folder has a `.claude/settings.json`, check that any
+8. **Current project wiring.** If the working folder has a `.claude/settings.json`, check that any
    permission rules use a matcher for a shell that exists here (PowerShell on Windows, Bash in the
    Linux container) — flag rules that can never match (e.g. `Bash(New-Item ...)`).
+9. **Machine profile complete.** Confirm `machine.local.md` exists in the harness repo and carries
+   a **Harness folder** entry — `/harness-pipeline:scaffold` reads it to fill the `{{HARNESS_PATH}}`
+   placeholder, and without it a scaffolded project gets no working master-rules import. On a
+   machine that uses yolo_docker, also check for the `yolo_docker folder`, `share git root` and
+   `share UNC root` entries: the shared docs refer to those as angle-bracket slots on purpose, so
+   a missing entry means the instructions have a hole rather than a wrong value.
 
 ## Rules
 - Never change anything during the check — looking only.
