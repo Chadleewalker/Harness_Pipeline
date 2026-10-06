@@ -2,7 +2,7 @@
 # Each machine keeps its own copy so the two PCs can't overwrite each other's setup.
 machine.local.md
 
-# This machine's Docker sandbox launcher (machine-specific; the work PC uses yolo_docker instead).
+# A retired per-machine Docker sandbox launcher; kept ignored so an old copy is never committed.
 launch-project.bat
 
 # Project path pointer files (each project/machine has its own).

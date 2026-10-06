@@ -18,10 +18,11 @@ Template files contain these markers, which `/harness-pipeline:scaffold` replace
 
 - `{{PROJECT_NAME}}` — the project's name
 - `{{PROJECT_DESCRIPTION}}` — a one-line description of what it does
+- `{{HARNESS_PATH}}` — this machine's Harness folder, read from `machine.local.md`
 
 ## What every template includes
 
-- A local `CLAUDE.md` that inherits from the master harness at `C:\Code\New Project Start\Harness_Pipeline\CLAUDE.md`
+- A local `CLAUDE.md` that inherits from the master harness through an `@`-import of its `CLAUDE.md`
 - A `README.md` with plain-English run instructions
 - A `.claude\` folder with the auto-format hook already wired up (`settings.json` + `hooks\format.js`)
 - Starter source files appropriate to the type

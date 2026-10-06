@@ -63,10 +63,9 @@ a one-line plain-English explanation and, if not ✅, the suggested fix.
    Linux container) — flag rules that can never match (e.g. `Bash(New-Item ...)`).
 9. **Machine profile complete.** Confirm `machine.local.md` exists in the harness repo and carries
    a **Harness folder** entry — `/harness-pipeline:scaffold` reads it to fill the `{{HARNESS_PATH}}`
-   placeholder, and without it a scaffolded project gets no working master-rules import. On a
-   machine that uses yolo_docker, also check for the `yolo_docker folder`, `share git root` and
-   `share UNC root` entries: the shared docs refer to those as angle-bracket slots on purpose, so
-   a missing entry means the instructions have a hole rather than a wrong value.
+   placeholder, and without it a scaffolded project gets no working master-rules import. Also
+   check for a **Pipeline repo** entry — `/harness-pipeline:pipeline-onboard` and
+   `/harness-pipeline:design` read it to find their source-of-truth documents.
 
 ## Rules
 - Never change anything during the check — looking only.

@@ -40,9 +40,9 @@ disagree, the file wins (it changes together with the pipeline's design doc).
   changes to the pipeline that would have invalidated a copy.
 - Never assume the integration branch is `main` — ask git, and record the real one.
 - Never leave a "Working inside yolo_docker" section in an onboarded project's
-  `CLAUDE.md` — its push-to-main advice is the opposite of how the pipeline works. A project
-  scaffolded here after 2026-07-27 won't have one if the pipeline question was answered at
-  scaffold time; an older project will.
+  `CLAUDE.md` — its push-to-main advice is the opposite of how the pipeline works. yolo_docker
+  is retired and the templates no longer carry the section (2026-10-06), but a project
+  scaffolded before then may; remove it on sight.
 - Pipeline projects don't keep format hooks (they fight the container's closed
   network). Confirm with the user, then remove them as the checklist says.
 - **The GitHub remote must exist before `bd init` runs.** Beads takes its sync remote from

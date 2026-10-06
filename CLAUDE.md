@@ -1,7 +1,7 @@
 # Universal AI Harness — Pipeline Edition
 
 This repository (`Harness_Pipeline`, GitHub `Chadleewalker/Harness_Pipeline`) is a **separate
-project from the original Harness** (`C:\Code\New Project Start\Harness`). It is the master
+project from the original Harness** (a sibling folder on the same machine). It is the master
 configuration for projects that work with the autonomous pipeline (`Multi-AgentPipelines`);
 the original Harness stays as it was. Don't push commits between the two.
 
@@ -26,20 +26,20 @@ much explanation they want, lives in `machine.local.md` ("Who uses this machine"
 ## At the Start of Every Session
 1. Read `machine.local.md` (in this Harness folder) for THIS computer's specifics — see
    "Per-Machine Local Config" below. Its values win over any machine-specific example in these docs.
-2. Check `C:\Code\New Project Start\Harness_Pipeline\known-issues.md` for any open issues
+2. Check `known-issues.md` in this Harness folder for any open issues
 3. If open issues exist, mention them briefly so the user knows what to watch for
 4. Check memory for current project status and resume where things left off
 
 ## Per-Machine Local Config (`machine.local.md`)
 The user runs this harness on more than one computer (e.g. a personal PC and a work PC), and those
-machines differ — different project folders, sandbox launchers, network drives, and usernames. To
+machines differ — different project folders, tool locations and usernames. To
 stop them overwriting each other through git, all machine-specific facts live in a file called
 `machine.local.md` in this Harness folder that is **git-ignored** — each machine keeps its own copy
 and it never syncs.
 
 - **Read it at session start.** It is the source of truth for: who uses this machine and
-  their explanation level (see "About the Users"), the project base folder, how this
-  machine launches its Docker sandbox, any network-share paths, and the local username.
+  their explanation level (see "About the Users"), the Harness folder, the pipeline repo, the
+  project base folder, and the local username.
 - **Its values win.** Anywhere else in these docs names a concrete username, drive path, or project
   folder, treat that as an example — defer to `machine.local.md` for the machine you're actually on.
 - **Never put machine-specific values into the shared (git-tracked) files.** If something is true
@@ -47,16 +47,9 @@ and it never syncs.
   templates, or the skills.
 - **A new computer needs its own copy.** If `machine.local.md` is missing, ask the user the few
   facts above and write one (copy the structure from another machine's file).
-- **Placeholders in these docs resolve from it.** This repository is public, so the tracked
-  files never name a real host or share. Where you see one of these, read the real value out
-  of `machine.local.md` before acting — never write to the literal placeholder path:
-
-  | Placeholder | What it stands for |
-  |---|---|
-  | `<git-share-drive>` | the Windows drive path to the bare-repo folder on the network share |
-  | `<git-share-unc>` | the same folder's UNC path, as seen from inside a container |
-
-  If `machine.local.md` does not define them, ask the user rather than guessing.
+- **This repository is public,** so the tracked files never name a real path, host or username.
+  Where a doc needs one, it says to read it from `machine.local.md`; if that file does not define it,
+  ask the user rather than guessing.
 
 ## How Claude Should Behave
 
@@ -103,7 +96,7 @@ Install or update the plugin on any machine with:
 
 ## Project Structure
 ```
-C:\Code\New Project Start\Harness_Pipeline\
+<Harness folder>\
 ├── CLAUDE.md                          ← This file (master rules)
 ├── .claude\
 │   └── settings.json                  ← Per-machine permission allow-list (plugins can't ship permissions)
@@ -134,96 +127,45 @@ per-machine `settings.json` on any other computer).
   feedback on how Claude should work). See the `/scaffold` skill's "Where Project Memories Go".
 
 ## Where This Runs (Two Environments)
-Every project — this harness included — runs in one of two places. Something that works in one can
-quietly break in the other, so anything Claude builds must work in BOTH unless the user says otherwise.
+A project can run in two places. Something that works in one can quietly break in the other, so
+anything Claude builds for a project the pipeline works on must work in BOTH unless the user says
+otherwise. A project the pipeline never touches only has to work on Windows.
 
 **1. Windows PC (local)**
 - Paths look like `C:\Code\...` — backslashes and a drive letter.
 - PowerShell is available.
 - Commands: `python`, `npx.cmd`, `node`.
-- The Harness folder (`C:\Code\New Project Start\Harness_Pipeline`) is present and reachable.
+- The Harness folder (its path is in `machine.local.md`) is present and reachable.
 
-**2. yolo_docker container** (a numbered Linux container with root access, opened as code-server
-in the browser — see "The yolo_docker Sandbox" below for the full picture)
-- Linux. The project is a git checkout at `~/workspace` (home is `/config`, so that's the same as
-  `/config/workspace`). Nothing from the Windows machine exists inside — no `C:\` drive, no
-  Harness folder.
+**2. The pipeline's task container** (for projects onboarded to the autonomous pipeline — see the
+pipeline repo's `ONBOARDING.md`)
+- Linux. The project is a checkout at `/workspace`. Nothing from the Windows machine exists inside —
+  no `C:\` drive, no Harness folder.
 - PowerShell is NOT installed.
 - Commands: `python3` (not `python`), `npx` (not `npx.cmd`), `node`.
-- Paths use forward slashes.
+- Paths use forward slashes, and files must have LF line endings (the `.gitattributes` keeps shell
+  scripts that way).
+- The network reaches Anthropic endpoints only: no package installs, no web lookups.
 
 **Rules that keep things working in both**
-- Never assume a `C:\...` path exists inside the container. Anything that must run in the sandbox
-  uses relative paths or `~/workspace`, never a hardcoded Windows path.
+- Never assume a `C:\...` path exists inside the container. Anything that must run there uses
+  relative paths, never a hardcoded Windows path.
 - Never rely on PowerShell for something that must run in both — use `node` (present in both).
-- `python` on Windows vs `python3` in the sandbox: try both, don't hardcode one.
-- Keep each project self-contained. A project may be opened alone inside the container with no access
-  to the Harness, so it cannot count on the master rules loading there — see the note below.
+- `python` on Windows vs `python3` in the container: try both, don't hardcode one.
+- Keep each project self-contained. The container sees only the project, so it cannot count on the
+  master rules loading there — see the note below.
 - For hook-specific guidance, see "Cross-Platform Hooks" further below.
 
-**Note on the master-rules import.** Every scaffolded `CLAUDE.md` has a line like
-`@C:\Code\New Project Start\Harness_Pipeline\CLAUDE.md`. That loads these master rules on Windows, but that
-path does not exist inside the container, so the import silently does nothing there. That's why the
+**Note on the master-rules import.** Every scaffolded `CLAUDE.md` opens with an `@`-import of this
+file by its absolute path on the Windows PC. That loads these master rules on Windows, but the path
+does not exist inside the container, so the import silently does nothing there. That's why the
 essential environment facts are ALSO embedded directly in each project's `CLAUDE.md` — so a project
-opened alone in the sandbox still understands where it runs.
-
-## The yolo_docker Sandbox
-> **Machine-specific values below live in `machine.local.md`.** The concrete username (`chadw`),
-> `J:` network-share path, and project base folder in this section describe the **work PC**. On any
-> given computer, defer to that machine's `machine.local.md` for the real values — and note some
-> machines don't use yolo_docker at all (the personal PC uses the `launch-project.bat` bind-mount
-> launcher instead). Read this section for the general how-it-works, not as literal paths for every machine.
-
-The Linux environment is provided by **yolo_docker** (https://github.com/JEdward7777/yolo_docker.git),
-created by Joshua. On machines that use it, it replaces the old `launch-project.bat` bind-mount
-sandbox. The idea: a semi-ephemeral container where the coding agent has root — it can install
-whatever it wants, and the whole thing is easy to blow away and rebuild.
-
-**How it works**
-- One Docker volume is mounted and becomes an overlay over root; a chroot happens on login. So
-  everything written inside the container (via code-server) persists in that one volume.
-- Containers are numbered ("agents"). Agent N's code-server is at port `844N` (agent 4 → 8444).
-- The control script lives on the Windows host and is run **from WSL**:
-  `~/yolo_docker/agent.sh <command> [agent-number]`
-  Commands: `up N`, `down N` (stop, keep state), `destroy N` (delete state — full reset),
-  `copy SRC DST` (mirror SRC's volume onto DST, overwrites DST), `export N [FILE]` /
-  `import FILE N` (tar.gz snapshots), `logs N`, `info N`, `status`.
-- There is no official golden image; agent 3 ("The Deep End") is the current known-good source to
-  `copy` from.
-
-**How the project gets in and out (git only — no bind mount)**
-- The project's bare repo lives on the network share: `<git-share-drive>\<project_name>.git` on
-  Windows, which is `<git-share-unc>\<project_name>.git` from the
-  container's point of view.
-- Inside the container, `~/network_share/mount_remote_repo.sh` smbfs-mounts JUST that one bare repo
-  at `~/network_share/remote_repo.git` (the rest of the network drive stays invisible). This script
-  does NOT run automatically — run it once each time the container starts, before expecting the
-  remote to be reachable.
-- The repo is cloned from that mount point directly to `~/workspace` (the checkout's `.git` is at
-  `~/workspace/.git`). All work happens there.
-- Everyone pushes to `main`. Because several agents can work on the same project at once, always
-  `git fetch` and **rebase onto the remote before pushing** — plain git commands, no wrapper script.
-- Agents record what they have and haven't done in the project's harness files (`CLAUDE.md`,
-  memory notes), which travel in the repo — that's how agents coordinate.
-
-**Starting Claude Code inside the container**
-Always launch it with `/config/launch-claude-code.sh` — never by typing `claude` directly. The
-environment is headless (code-server is the interface), and that script sets the user's Claude Code
-keys. It needs no per-project edits; it just has to be used.
-
-**Setting up a NEW project in yolo_docker (checklist)**
-1. Create the project on the Windows PC and push it to a new bare repo at
-   `<git-share-drive>\<project_name>.git`.
-2. From WSL: `./agent.sh copy 3 N` to clone a working agent's volume onto agent N, then
-   `./agent.sh up N` and open code-server at port `844N`.
-3. Inside the container: edit `~/network_share/mount_remote_repo.sh` to point at the new project's
-   `.git` path, then run it.
-4. Clear out `~/workspace` and re-clone from `~/network_share/remote_repo.git`.
-5. Start Claude Code with `/config/launch-claude-code.sh`.
+opened alone in the container still understands where it runs.
 
 ## Cross-Platform Hooks (important)
-Projects run in two places: directly on Windows, and inside the Linux yolo_docker container.
-Any hook command in a `.claude\settings.json` must work in BOTH.
+Pipeline projects run on Windows and inside the Linux task container, so any hook command in a
+`.claude\settings.json` that travels with such a project must work in BOTH. (Onboarding removes
+a project's format hook entirely, because it needs the npm registry the container cannot reach.)
 - Run hooks with **`node`** — e.g. `node "${CLAUDE_PROJECT_DIR}/.claude/hooks/format.js"`. `node`
   is the same command on Windows and in the sandbox, so there's no per-machine setup to remember.
 - Do **not** use `powershell` (it isn't installed in the Linux sandbox) or a bare `python3`
